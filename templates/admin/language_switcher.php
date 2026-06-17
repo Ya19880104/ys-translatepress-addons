@@ -90,41 +90,55 @@ $poses  = [ 'bottom-right' => '右下', 'bottom-left' => '左下', 'top-right' =
         <div class="ystp-panel">
             <div class="ystp-panel-head"><span class="dashicons dashicons-shortcode"></span> 短代碼用法</div>
             <div class="ystp-panel-body">
-                <p><?php esc_html_e( '在任何文章、頁面或小工具中插入：', 'ys-translatepress-addons' ); ?></p>
+                <p><?php esc_html_e( '在任何文章、頁面或小工具中插入下方短代碼。不帶參數時使用上方「預設樣式」：', 'ys-translatepress-addons' ); ?></p>
                 <p><code style="display:block;padding:10px 12px;background:#f4f6f8;border-radius:8px;">[ys_language_switcher]</code></p>
-                <p style="margin-top:14px;"><?php esc_html_e( '可指定參數：', 'ys-translatepress-addons' ); ?></p>
-                <ul class="ystp-langlist" style="font-size:13px;">
-                    <li><code>[ys_language_switcher style="dropdown"]</code></li>
-                    <li><code>[ys_language_switcher style="inline" show="flag"]</code></li>
-                    <li><code>[ys_language_switcher style="popup" show="both"]</code></li>
-                </ul>
-                <p class="ystp-field-desc"><?php esc_html_e( 'style：dropdown／inline／popup／floating；show：both／flag／name／short', 'ys-translatepress-addons' ); ?></p>
+                <p class="ystp-field-desc" style="margin-top:12px;"><?php esc_html_e( '可指定參數 — style：dropdown／inline／popup／floating／map；show：both（旗幟+名稱）／flag／name／short。', 'ys-translatepress-addons' ); ?></p>
+                <p class="ystp-field-desc"><?php esc_html_e( '範例：', 'ys-translatepress-addons' ); ?> <code>[ys_language_switcher style="inline" show="flag"]</code></p>
             </div>
         </div>
     </div>
 
     <div class="ystp-panel">
-        <div class="ystp-panel-head"><span class="dashicons dashicons-visibility"></span> 即時預覽</div>
+        <div class="ystp-panel-head"><span class="dashicons dashicons-visibility"></span> 各樣式預覽與對應短代碼</div>
         <div class="ystp-panel-body">
-            <div style="display:flex;flex-wrap:wrap;gap:40px;align-items:flex-start;">
-                <div>
-                    <p class="ystp-muted" style="margin-bottom:8px;font-weight:600;">下拉選單</p>
-                    <?php echo $switcher->render( 'dropdown', $show, 'bottom-right' ); // phpcs:ignore ?>
-                </div>
-                <div>
-                    <p class="ystp-muted" style="margin-bottom:8px;font-weight:600;">並排清單</p>
-                    <?php echo $switcher->render( 'inline', $show, 'bottom-right' ); // phpcs:ignore ?>
-                </div>
-                <div>
-                    <p class="ystp-muted" style="margin-bottom:8px;font-weight:600;">彈出視窗</p>
-                    <?php echo $switcher->render( 'popup', $show, 'bottom-right' ); // phpcs:ignore ?>
-                </div>
-                <div>
-                    <p class="ystp-muted" style="margin-bottom:8px;font-weight:600;">世界地圖</p>
-                    <?php echo $switcher->render( 'map', $show, 'bottom-right' ); // phpcs:ignore ?>
-                </div>
+            <p class="ystp-field-desc" style="margin-bottom:18px;"><?php esc_html_e( '以下為實際前台元件，可直接點擊操作；每個樣式下方為對應短代碼，點一下即可複製。', 'ys-translatepress-addons' ); ?></p>
+            <div class="ystp-sc-grid">
+                <?php
+                $preview_styles = [
+                    'dropdown' => '下拉選單',
+                    'inline'   => '並排清單',
+                    'popup'    => '彈出視窗',
+                    'map'      => '世界地圖',
+                    'floating' => '固定浮動',
+                ];
+                foreach ( $preview_styles as $skey => $stitle ) :
+                    $sc = '[ys_language_switcher style="' . $skey . '"]';
+                    ?>
+                    <div class="ystp-sc-card">
+                        <div class="ystp-sc-title"><?php echo esc_html( $stitle ); ?></div>
+                        <div class="ystp-sc-preview">
+                            <?php
+                            if ( 'floating' === $skey ) {
+                                echo '<span class="ystp-muted" style="font-size:12.5px;">' . esc_html__( '需於前台頁面才會固定在角落顯示', 'ys-translatepress-addons' ) . '</span>';
+                            } else {
+                                echo $switcher->render( $skey, $show, 'bottom-right' ); // phpcs:ignore
+                            }
+                            ?>
+                        </div>
+                        <code class="ystp-sc-code" data-copy="<?php echo esc_attr( $sc ); ?>" title="<?php esc_attr_e( '點一下複製', 'ys-translatepress-addons' ); ?>"><?php echo esc_html( $sc ); ?></code>
+                    </div>
+                <?php endforeach; ?>
             </div>
-            <p class="ystp-field-desc" style="margin-top:18px;"><?php esc_html_e( '註：以上為實際前台元件，可直接點擊操作。「固定浮動」樣式需於前台頁面才會固定在角落。', 'ys-translatepress-addons' ); ?></p>
         </div>
     </div>
 </div>
+
+<style>
+.ystp-sc-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:16px; }
+.ystp-sc-card{ border:1px solid #e3e8ec; border-radius:10px; padding:16px; background:#fff; }
+.ystp-sc-title{ font-weight:600; color:#1f2d3d; margin-bottom:12px; font-size:13.5px; }
+.ystp-sc-preview{ min-height:46px; margin-bottom:14px; display:flex; align-items:center; }
+.ystp-sc-code{ display:block; padding:8px 10px; background:#f4f6f8; border:1px solid #e3e8ec; border-radius:7px; font-size:12px; cursor:pointer; word-break:break-all; transition:background .15s,border-color .15s; }
+.ystp-sc-code:hover{ background:#eef2f5; border-color:#c4d0d8; }
+.ystp-sc-code.copied{ background:#e7f0ed; border-color:#5b9a8b; }
+</style>

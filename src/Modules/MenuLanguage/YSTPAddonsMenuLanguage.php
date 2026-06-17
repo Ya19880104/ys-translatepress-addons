@@ -151,6 +151,10 @@ class YSTPAddonsMenuLanguage implements YSTPAddonsModuleInterface {
         // 第一輪：依語言設定移除
         foreach ( $items as $key => $item ) {
             $langs = get_post_meta( $item->ID, self::META_KEY, true );
+            // 相容：本外掛未設定時，沿用既有（PRO）選單語言欄位
+            if ( empty( $langs ) ) {
+                $langs = $this->pro_menu_languages( (int) $item->ID );
+            }
             if ( ! empty( $langs ) && is_array( $langs ) && ! in_array( $current, $langs, true ) ) {
                 $removed[ (int) $item->ID ] = true;
                 unset( $items[ $key ] );
@@ -173,5 +177,20 @@ class YSTPAddonsMenuLanguage implements YSTPAddonsModuleInterface {
         }
 
         return $items;
+    }
+
+    /**
+     * 相容：讀取既有（PRO）選單語言欄位 `_trp_menu_languages`
+     *
+     * PRO 格式為逗號分隔語言碼字串；'trp_nbol_all_languages' 代表所有語言（不限制）。
+     *
+     * @return string[] 語言碼陣列（空＝不限制）
+     */
+    private function pro_menu_languages( int $item_id ): array {
+        $raw = get_post_meta( $item_id, '_trp_menu_languages', true );
+        if ( empty( $raw ) || ! is_string( $raw ) || 'trp_nbol_all_languages' === $raw ) {
+            return [];
+        }
+        return array_values( array_filter( array_map( 'trim', explode( ',', $raw ) ) ) );
     }
 }

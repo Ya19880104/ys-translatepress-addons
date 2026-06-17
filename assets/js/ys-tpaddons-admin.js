@@ -213,4 +213,25 @@
             .finally( function () { $btn.prop( 'disabled', false ); } );
     } );
 
+    /* ───────────── 短代碼點擊複製 ───────────── */
+    $( document ).on( 'click', '.ystp-sc-code[data-copy]', function () {
+        var $c = $( this );
+        var text = $c.attr( 'data-copy' );
+        function done() {
+            $c.addClass( 'copied' );
+            setTimeout( function () { $c.removeClass( 'copied' ); }, 1200 );
+            toast( '已複製短代碼' );
+        }
+        if ( navigator.clipboard && navigator.clipboard.writeText ) {
+            navigator.clipboard.writeText( text ).then( done, function () {} );
+        } else {
+            var ta = document.createElement( 'textarea' );
+            ta.value = text;
+            document.body.appendChild( ta );
+            ta.select();
+            try { document.execCommand( 'copy' ); done(); } catch ( e ) {}
+            document.body.removeChild( ta );
+        }
+    } );
+
 } )( jQuery );

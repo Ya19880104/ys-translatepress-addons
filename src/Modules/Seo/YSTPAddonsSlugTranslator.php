@@ -128,6 +128,12 @@ class YSTPAddonsSlugTranslator {
         ) );
 
         $result = is_string( $val ) ? $val : '';
+
+        // 相容：查不到本外掛的 slug 時，沿用既有（PRO）翻譯 slug 欄位
+        if ( '' === $result ) {
+            $result = $this->pro_translated_for_original( $original_slug, $locale );
+        }
+
         $this->out_cache[ $ck ] = $result;
         return $result;
     }
@@ -206,7 +212,114 @@ class YSTPAddonsSlugTranslator {
             $meta_key,
             $translated_slug
         ) );
+        if ( is_string( $post_name ) && '' !== $post_name ) {
+            return $post_name;
+        }
+        // 相容：沿用既有（PRO）翻譯 slug 欄位反查
+        return $this->pro_original_for_translated( $translated_slug, $locale );
+    }
+
+    /* ───────────── 相容：讀取既有（PRO）翻譯 slug 欄位 ───────────── */
+
+    /** locale → url-slug（zh_TW → zh） */
+    private function locale_url_slug( string $locale ): string {
+        $slug = YSTPAddonsTP::settings()['url-slugs'][ $locale ] ?? '';
+        return is_string( $slug ) ? $slug : '';
+    }
+
+    private function pro_table_exists( string $table ): bool {
+        global $wpdb;
+        return (bool) $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $table ) );
+    }
+
+    /** 由原始 slug 取既有翻譯 slug（資料表優先，再 meta） */
+    private function pro_translated_for_original( string $original_slug, string $locale ): string {
+        global $wpdb;
+        $url_slug = $this->locale_url_slug( $locale );
+        $ot = $wpdb->prefix . 'trp_slug_originals';
+        $tt = $wpdb->prefix . 'trp_slug_translations';
+
+        if ( $this->pro_table_exists( $tt ) && $this->pro_table_exists( $ot ) ) {
+            // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+            $val = $wpdb->get_var( $wpdb->prepare(
+                "SELECT st.translated FROM `$tt` st INNER JOIN `$ot` so ON so.id = st.original_id
+                 WHERE so.original = %s AND st.language IN (%s, %s) AND st.translated <> '' LIMIT 1",
+                $original_slug,
+                $url_slug,
+                $locale
+            ) );
+            if ( is_string( $val ) && '' !== $val ) {
+                return $val;
+            }
+        }
+
+        // meta 副存儲（人工優先，再自動）
+        $pid = (int) $wpdb->get_var( $wpdb->prepare(
+            "SELECT ID FROM {$wpdb->posts} WHERE post_name = %s AND post_status IN ('publish','private') LIMIT 1",
+            $original_slug
+        ) );
+        if ( $pid ) {
+            foreach ( $this->pro_meta_keys( $locale, $url_slug ) as $mk ) {
+                $v = get_post_meta( $pid, $mk, true );
+                if ( is_string( $v ) && '' !== $v ) {
+                    return $v;
+                }
+            }
+        }
+        return '';
+    }
+
+    /** 由翻譯 slug 反查原始 slug（既有 PRO 欄位） */
+    private function pro_original_for_translated( string $translated_slug, string $locale ): string {
+        global $wpdb;
+        $url_slug = $this->locale_url_slug( $locale );
+        $ot = $wpdb->prefix . 'trp_slug_originals';
+        $tt = $wpdb->prefix . 'trp_slug_translations';
+
+        if ( $this->pro_table_exists( $tt ) && $this->pro_table_exists( $ot ) ) {
+            // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+            $orig = $wpdb->get_var( $wpdb->prepare(
+                "SELECT so.original FROM `$tt` st INNER JOIN `$ot` so ON so.id = st.original_id
+                 WHERE st.translated = %s AND st.language IN (%s, %s) LIMIT 1",
+                $translated_slug,
+                $url_slug,
+                $locale
+            ) );
+            if ( is_string( $orig ) && '' !== $orig ) {
+                return $orig;
+            }
+        }
+
+        $keys = $this->pro_meta_keys( $locale, $url_slug );
+        // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $post_name = $wpdb->get_var( $wpdb->prepare(
+            "SELECT p.post_name FROM {$wpdb->posts} p
+             INNER JOIN {$wpdb->postmeta} pm ON pm.post_id = p.ID
+             WHERE pm.meta_key IN (%s, %s, %s, %s) AND pm.meta_value = %s
+             AND p.post_status IN ('publish','private') LIMIT 1",
+            $keys[0], $keys[1], $keys[2], $keys[3],
+            $translated_slug
+        ) );
         return is_string( $post_name ) ? $post_name : '';
+    }
+
+    /** 由 post 取既有翻譯 slug（供 meta box 預填沿用） */
+    private function pro_slug_for_post( int $post_id, string $locale ): string {
+        $name = get_post_field( 'post_name', $post_id );
+        if ( ! $name ) {
+            return '';
+        }
+        return $this->pro_translated_for_original( (string) $name, $locale );
+    }
+
+    /** 既有翻譯 slug 的 meta key（人工 + 自動，locale 與 url-slug 兩格式） */
+    private function pro_meta_keys( string $locale, string $url_slug ): array {
+        return [
+            '_trp_translated_slug_' . $locale,
+            '_trp_translated_slug_' . $url_slug,
+            '_trp_automatically_translated_slug_' . $locale,
+            '_trp_automatically_translated_slug_' . $url_slug,
+        ];
     }
 
     /* ───────────── 後台 Meta Box ───────────── */
@@ -245,13 +358,20 @@ class YSTPAddonsSlugTranslator {
             if ( $code === $default ) {
                 continue;
             }
-            $val = (string) get_post_meta( $post->ID, self::META_PREFIX . $code, true );
+            $val      = (string) get_post_meta( $post->ID, self::META_PREFIX . $code, true );
+            $inherited = '';
+            if ( '' === $val ) {
+                $inherited = $this->pro_slug_for_post( (int) $post->ID, $code );
+            }
             ?>
             <tr>
                 <th style="width:180px;"><label for="ys-tp-slug-<?php echo esc_attr( $code ); ?>"><?php echo esc_html( $name ); ?> <code><?php echo esc_html( $code ); ?></code></label></th>
                 <td>
                     <input type="text" id="ys-tp-slug-<?php echo esc_attr( $code ); ?>" name="ys_tp_slug[<?php echo esc_attr( $code ); ?>]"
-                        value="<?php echo esc_attr( $val ); ?>" class="regular-text" placeholder="<?php echo esc_attr( $post->post_name ); ?>" />
+                        value="<?php echo esc_attr( '' !== $val ? $val : $inherited ); ?>" class="regular-text" placeholder="<?php echo esc_attr( $post->post_name ); ?>" />
+                    <?php if ( '' === $val && '' !== $inherited ) : ?>
+                        <p class="description" style="margin:4px 0 0;color:#5b9a8b;"><?php esc_html_e( '沿用自既有設定，儲存後即由本外掛接管。', 'ys-translatepress-addons' ); ?></p>
+                    <?php endif; ?>
                 </td>
             </tr>
         <?php endforeach; ?>

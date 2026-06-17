@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: YS TranslatePress Addons 0.7.1\n"
+"Project-Id-Version: YS TranslatePress Addons 0.7.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/ys-translatepress-addons\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-06-17T03:29:46+00:00\n"
+"POT-Creation-Date: 2026-06-17T03:51:26+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: ys-translatepress-addons\n"
@@ -217,14 +217,18 @@ msgstr ""
 msgid "所有語言"
 msgstr ""
 
-#: src/Modules/Seo/YSTPAddonsSlugTranslator.php:220
+#: src/Modules/Seo/YSTPAddonsSlugTranslator.php:333
 msgid "多語網址 slug（多語增強）"
 msgstr ""
 
 #. translators: %s: 原始 slug
-#: src/Modules/Seo/YSTPAddonsSlugTranslator.php:238
+#: src/Modules/Seo/YSTPAddonsSlugTranslator.php:351
 #, php-format
 msgid "為各語言設定自訂網址 slug（留空＝沿用原始 slug「%s」）。"
+msgstr ""
+
+#: src/Modules/Seo/YSTPAddonsSlugTranslator.php:373
+msgid "沿用自既有設定，儲存後即由本外掛接管。"
 msgstr ""
 
 #: src/Support/YSTPAddonsCompat.php:75
@@ -536,19 +540,27 @@ msgid "浮動位置"
 msgstr ""
 
 #: templates/admin/language_switcher.php:93
-msgid "在任何文章、頁面或小工具中插入："
+msgid "在任何文章、頁面或小工具中插入下方短代碼。不帶參數時使用上方「預設樣式」："
 msgstr ""
 
 #: templates/admin/language_switcher.php:95
-msgid "可指定參數："
+msgid "可指定參數 — style：dropdown／inline／popup／floating／map；show：both（旗幟+名稱）／flag／name／short。"
 msgstr ""
 
-#: templates/admin/language_switcher.php:101
-msgid "style：dropdown／inline／popup／floating；show：both／flag／name／short"
+#: templates/admin/language_switcher.php:96
+msgid "範例："
 msgstr ""
 
-#: templates/admin/language_switcher.php:127
-msgid "註：以上為實際前台元件，可直接點擊操作。「固定浮動」樣式需於前台頁面才會固定在角落。"
+#: templates/admin/language_switcher.php:104
+msgid "以下為實際前台元件，可直接點擊操作；每個樣式下方為對應短代碼，點一下即可複製。"
+msgstr ""
+
+#: templates/admin/language_switcher.php:122
+msgid "需於前台頁面才會固定在角落顯示"
+msgstr ""
+
+#: templates/admin/language_switcher.php:128
+msgid "點一下複製"
 msgstr ""
 
 #: templates/admin/overview.php:101
