@@ -1,0 +1,41 @@
+/**
+ * YS TranslatePress Addons — 語言自動偵測提示（前台）
+ */
+.ystp-ald{ --ald-navy:#1f2d3d; --ald-accent:#d98a3d; --ald-accent-d:#c2762c;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang TC","Microsoft JhengHei",sans-serif;
+    position:fixed; z-index:100000; }
+.ystp-ald *{ box-sizing:border-box; }
+.ystp-ald-flag{ width:26px; height:18px; border-radius:3px; object-fit:cover; box-shadow:0 0 0 1px rgba(0,0,0,.08); flex-shrink:0; }
+.ystp-ald-btn{ cursor:pointer; border:none; border-radius:9px; font-size:14px; font-weight:600; padding:9px 16px; line-height:1.3;
+    font-family:inherit; transition:background .15s,border-color .15s,color .15s; }
+.ystp-ald-accept{ background:var(--ald-accent); color:#fff; }
+.ystp-ald-accept:hover{ background:var(--ald-accent-d); }
+.ystp-ald-dismiss{ background:transparent; color:#7a8a96; }
+.ystp-ald-dismiss:hover{ color:var(--ald-navy); }
+
+/* ── 卡片樣式 ── */
+.ystp-ald--card{ width:330px; max-width:calc(100vw - 32px);
+    background:#fff; border-radius:16px; box-shadow:0 18px 48px rgba(20,30,40,.22), 0 2px 8px rgba(20,30,40,.08);
+    padding:20px 22px; opacity:0; transform:translateY(14px); transition:opacity .3s, transform .3s; }
+.ystp-ald--card.is-in{ opacity:1; transform:none; }
+.ystp-ald--card.pos-bottom-right{ right:22px; bottom:22px; }
+.ystp-ald--card.pos-bottom-left{ left:22px; bottom:22px; }
+.ystp-ald-card-head{ display:flex; align-items:center; gap:11px; margin-bottom:14px; }
+.ystp-ald-card-title{ font-size:15px; font-weight:600; color:var(--ald-navy); line-height:1.5; }
+.ystp-ald-card-actions{ display:flex; align-items:center; gap:6px; }
+.ystp-ald-card-actions .ystp-ald-accept{ flex:1; }
+.ystp-ald-close{ position:absolute; top:12px; right:14px; border:none; background:none; font-size:22px; line-height:1; color:#aeb8c0; cursor:pointer; }
+.ystp-ald-close:hover{ color:var(--ald-navy); }
+
+/* ── 橫幅樣式 ── */
+.ystp-ald--bar{ top:0; left:0; right:0; width:100%;
+    background:#fff; border-bottom:1px solid #e3e8ec; box-shadow:0 2px 12px rgba(20,30,40,.08);
+    transform:translateY(-100%); transition:transform .3s; }
+.ystp-ald--bar.is-in{ transform:none; }
+.ystp-ald-bar-inner{ max-width:1100px; margin:0 auto; padding:12px 20px; display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
+.ystp-ald-bar-title{ font-size:14.5px; color:var(--ald-navy); display:flex; align-items:center; gap:10px; flex:1; min-width:200px; }
+.ystp-ald-bar .ystp-ald-card-actions{ display:flex; align-items:center; gap:8px; }
+
+@media (max-width:480px){
+    .ystp-ald--card{ left:16px; right:16px; width:auto; }
+}

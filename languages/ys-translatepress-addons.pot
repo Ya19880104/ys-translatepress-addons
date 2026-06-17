@@ -1,0 +1,624 @@
+# Copyright (C) 2026 YANGSHEEP DESIGN
+# This file is distributed under the GPL-2.0-or-later.
+msgid ""
+msgstr ""
+"Project-Id-Version: YS TranslatePress Addons 0.7.1\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/ys-translatepress-addons\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-06-17T03:29:46+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: ys-translatepress-addons\n"
+
+#. Plugin Name of the plugin
+#: ys-translatepress-addons.php
+msgid "YS TranslatePress Addons"
+msgstr ""
+
+#. Plugin URI of the plugin
+#. Author URI of the plugin
+#: ys-translatepress-addons.php
+msgid "https://yangsheep.com.tw"
+msgstr ""
+
+#. Description of the plugin
+#: ys-translatepress-addons.php
+msgid "TranslatePress 多語言強化套件 — 解鎖語言數量、SEO、AI 翻譯（OpenAI／Gemini／Claude）、選單語言控制、語言自動偵測、語言切換器、內容語言規則與翻譯匯出匯入。"
+msgstr ""
+
+#. Author of the plugin
+#: ys-translatepress-addons.php
+msgid "YANGSHEEP DESIGN"
+msgstr ""
+
+#: src/Admin/YSTPAddonsAdmin.php:32
+#: src/Admin/YSTPAddonsAdmin.php:33
+msgid "多語增強"
+msgstr ""
+
+#: src/Admin/YSTPAddonsAdmin.php:43
+#: src/Admin/YSTPAddonsAdmin.php:44
+msgid "總覽"
+msgstr ""
+
+#: src/Admin/YSTPAddonsAdmin.php:97
+msgid "儲存中…"
+msgstr ""
+
+#: src/Admin/YSTPAddonsAdmin.php:98
+#: src/Admin/YSTPAddonsAjaxHandler.php:90
+msgid "已儲存"
+msgstr ""
+
+#: src/Admin/YSTPAddonsAdmin.php:99
+msgid "操作失敗，請重試"
+msgstr ""
+
+#: src/Admin/YSTPAddonsAdmin.php:120
+#: src/Admin/YSTPAddonsAdmin.php:135
+msgid "你沒有足夠的權限。"
+msgstr ""
+
+#: src/Admin/YSTPAddonsAdmin.php:149
+msgid "此模組設定頁尚未提供。"
+msgstr ""
+
+#: src/Admin/YSTPAddonsAjaxHandler.php:31
+#: src/Modules/AiTranslate/YSTPAddonsAiTranslate.php:40
+#: src/Modules/ImportExport/YSTPAddonsImportExport.php:33
+#: src/Modules/ImportExport/YSTPAddonsImportExport.php:102
+msgid "安全驗證失敗"
+msgstr ""
+
+#: src/Admin/YSTPAddonsAjaxHandler.php:34
+#: src/Modules/AiTranslate/YSTPAddonsAiTranslate.php:43
+#: src/Modules/ImportExport/YSTPAddonsImportExport.php:105
+msgid "權限不足"
+msgstr ""
+
+#: src/Admin/YSTPAddonsAjaxHandler.php:63
+msgid "沒有收到設定資料"
+msgstr ""
+
+#: src/Admin/YSTPAddonsAjaxHandler.php:104
+msgid "未知的模組"
+msgstr ""
+
+#: src/Admin/YSTPAddonsAjaxHandler.php:117
+msgid "模組已啟用"
+msgstr ""
+
+#: src/Admin/YSTPAddonsAjaxHandler.php:118
+msgid "模組已停用"
+msgstr ""
+
+#: src/Modules/AiTranslate/Providers/YSTPAddonsAbstractProvider.php:53
+msgid "尚未設定 API 金鑰"
+msgstr ""
+
+#: src/Modules/AiTranslate/Providers/YSTPAddonsAbstractProvider.php:66
+msgid "無法解析 AI 回傳的翻譯結果"
+msgstr ""
+
+#: src/Modules/AiTranslate/Providers/YSTPAddonsAbstractProvider.php:101
+msgid "API 回應非有效 JSON"
+msgstr ""
+
+#: src/Modules/AiTranslate/Providers/YSTPAddonsAbstractProvider.php:105
+msgid "API 回應內容為空"
+msgstr ""
+
+#: src/Modules/AiTranslate/Providers/YSTPAddonsMockProvider.php:33
+msgid "測試模擬"
+msgstr ""
+
+#: src/Modules/AiTranslate/YSTPAddonsAiTranslate.php:58
+msgid "找不到供應商設定"
+msgstr ""
+
+#. translators: %s: 供應商名稱
+#: src/Modules/AiTranslate/YSTPAddonsAiTranslate.php:66
+#, php-format
+msgid "%s 連線成功！"
+msgstr ""
+
+#: src/Modules/AiTranslate/YSTPAddonsAiTranslate.php:107
+msgid "無效的文章"
+msgstr ""
+
+#. translators: %d: 翻譯字串數
+#: src/Modules/AiTranslate/YSTPAddonsAiTranslate.php:117
+#, php-format
+msgid "已翻譯 %d 個字串"
+msgstr ""
+
+#: src/Modules/AiTranslate/YSTPAddonsAiTranslate.php:155
+msgid "AI 翻譯（多語增強）"
+msgstr ""
+
+#: src/Modules/AiTranslate/YSTPAddonsAiTranslate.php:167
+msgid "抓取本頁各語言版本並以 AI 翻譯尚未翻譯的字串。"
+msgstr ""
+
+#: src/Modules/AiTranslate/YSTPAddonsAiTranslate.php:171
+msgid "AI 翻譯此頁"
+msgstr ""
+
+#: src/Modules/AiTranslate/YSTPAddonsAiTranslate.php:183
+msgid "翻譯中，請稍候…"
+msgstr ""
+
+#: src/Modules/AiTranslate/YSTPAddonsAiTranslate.php:194
+msgid "發生錯誤"
+msgstr ""
+
+#: src/Modules/AiTranslate/YSTPAddonsTranslationService.php:107
+msgid "找不到翻譯供應商"
+msgstr ""
+
+#: src/Modules/ContentRules/YSTPAddonsContentRules.php:65
+msgid "多語顯示規則"
+msgstr ""
+
+#: src/Modules/ContentRules/YSTPAddonsContentRules.php:84
+msgid "所有語言顯示"
+msgstr ""
+
+#: src/Modules/ContentRules/YSTPAddonsContentRules.php:85
+msgid "排除以下語言"
+msgstr ""
+
+#: src/Modules/ContentRules/YSTPAddonsContentRules.php:86
+msgid "只在以下語言顯示"
+msgstr ""
+
+#: src/Modules/ContentRules/YSTPAddonsContentRules.php:96
+msgid "切換到被隱藏的語言時，此內容會從列表移除；若直接造訪則重導至設定的對應頁。"
+msgstr ""
+
+#: src/Modules/ImportExport/YSTPAddonsImportExport.php:108
+msgid "未收到檔案"
+msgstr ""
+
+#: src/Modules/ImportExport/YSTPAddonsImportExport.php:115
+msgid "JSON 格式不正確或無翻譯資料"
+msgstr ""
+
+#. translators: %d: 匯入字串數
+#: src/Modules/ImportExport/YSTPAddonsImportExport.php:123
+#, php-format
+msgid "匯入完成，更新 %d 個翻譯。"
+msgstr ""
+
+#: src/Modules/LanguageSwitcher/YSTPAddonsLanguageSwitcher.php:176
+#: src/Modules/LanguageSwitcher/YSTPAddonsLanguageSwitcher.php:178
+#: src/Modules/LanguageSwitcher/YSTPAddonsLanguageSwitcher.php:232
+msgid "選擇語言"
+msgstr ""
+
+#: src/Modules/LanguageSwitcher/YSTPAddonsLanguageSwitcher.php:177
+#: src/Modules/LanguageSwitcher/YSTPAddonsLanguageSwitcher.php:233
+msgid "關閉"
+msgstr ""
+
+#: src/Modules/LanguageSwitcher/YSTPAddonsLanguageSwitcher.php:234
+msgid "選擇你的語言"
+msgstr ""
+
+#: src/Modules/MenuLanguage/YSTPAddonsMenuLanguage.php:76
+msgid "顯示語言（多語增強）"
+msgstr ""
+
+#: src/Modules/MenuLanguage/YSTPAddonsMenuLanguage.php:80
+msgid "所有語言"
+msgstr ""
+
+#: src/Modules/Seo/YSTPAddonsSlugTranslator.php:220
+msgid "多語網址 slug（多語增強）"
+msgstr ""
+
+#. translators: %s: 原始 slug
+#: src/Modules/Seo/YSTPAddonsSlugTranslator.php:238
+#, php-format
+msgid "為各語言設定自訂網址 slug（留空＝沿用原始 slug「%s」）。"
+msgstr ""
+
+#: src/Support/YSTPAddonsCompat.php:75
+msgid "YS 多語增強"
+msgstr ""
+
+#. translators: %s: 被停用的外掛清單
+#: src/Support/YSTPAddonsCompat.php:78
+#, php-format
+msgid "已自動停用與本外掛功能重疊的外掛（%s），以避免同時啟用造成衝突。如需自行管理，可至「多語增強 → 總覽 → 相容性」關閉「衝突外掛自動停用」。"
+msgstr ""
+
+#: src/Support/YSTPAddonsModules.php:36
+msgid "解鎖語言數量"
+msgstr ""
+
+#: src/Support/YSTPAddonsModules.php:37
+msgid "移除免費版「僅 1 個次要語言」的限制，可新增無限多語言。"
+msgstr ""
+
+#: src/Support/YSTPAddonsModules.php:45
+msgid "語言切換器"
+msgstr ""
+
+#: src/Support/YSTPAddonsModules.php:46
+msgid "全新設計的語言切換短代碼：固定浮動、彈出視窗、下拉選單等多種樣式。"
+msgstr ""
+
+#: src/Support/YSTPAddonsModules.php:54
+msgid "語言自動偵測"
+msgstr ""
+
+#: src/Support/YSTPAddonsModules.php:55
+msgid "依瀏覽器語言自動建議語言，重新設計的精緻提示介面。"
+msgstr ""
+
+#: src/Support/YSTPAddonsModules.php:63
+msgid "選單語言控制"
+msgstr ""
+
+#: src/Support/YSTPAddonsModules.php:64
+msgid "針對每個選單項目設定在哪些語言顯示或隱藏。"
+msgstr ""
+
+#: src/Support/YSTPAddonsModules.php:72
+msgid "內容語言規則"
+msgstr ""
+
+#: src/Support/YSTPAddonsModules.php:73
+msgid "頁面／文章／自訂內容可排除或指定語言顯示，切換語言時自動重導至該語言的對應頁。"
+msgstr ""
+
+#: src/Support/YSTPAddonsModules.php:81
+msgid "AI 翻譯"
+msgstr ""
+
+#: src/Support/YSTPAddonsModules.php:82
+msgid "支援 OpenAI／Gemini／Claude，提供自動、手動逐頁、全站與排程背景翻譯。"
+msgstr ""
+
+#: src/Support/YSTPAddonsModules.php:90
+msgid "SEO 增強"
+msgstr ""
+
+#: src/Support/YSTPAddonsModules.php:91
+msgid "hreflang 細控（地區標籤／x-default）與多語 sitemap（相容 Yoast／RankMath）。"
+msgstr ""
+
+#: src/Support/YSTPAddonsModules.php:99
+msgid "翻譯匯出／匯入"
+msgstr ""
+
+#: src/Support/YSTPAddonsModules.php:100
+msgid "全站或單頁匯出翻譯文字，外部編修後再匯入。"
+msgstr ""
+
+#: templates/admin/ai_translate.php:70
+msgid "使用的供應商"
+msgstr ""
+
+#: templates/admin/ai_translate.php:75
+msgid "測試模擬（不需金鑰）"
+msgstr ""
+
+#: templates/admin/ai_translate.php:89
+msgid "留空表示保留既有金鑰。"
+msgstr ""
+
+#: templates/admin/ai_translate.php:92
+msgid "模型"
+msgstr ""
+
+#: templates/admin/ai_translate.php:107
+msgid "其他（自行輸入）"
+msgstr ""
+
+#: templates/admin/ai_translate.php:113
+msgid "選「其他」可自行輸入模型名稱。查詢可用模型："
+msgstr ""
+
+#: templates/admin/ai_translate.php:114
+msgid "官方模型清單 ↗"
+msgstr ""
+
+#: templates/admin/ai_translate.php:138
+msgid "存檔後自動翻譯"
+msgstr ""
+
+#: templates/admin/ai_translate.php:140
+msgid "發佈／更新內容後，於背景自動翻譯該頁字串。"
+msgstr ""
+
+#: templates/admin/ai_translate.php:143
+msgid "排程背景翻譯"
+msgstr ""
+
+#: templates/admin/ai_translate.php:145
+msgid "由 WP-Cron 在背景分批翻譯，徹底避免前台即時翻譯造成的卡頓。"
+msgstr ""
+
+#: templates/admin/ai_translate.php:148
+msgid "排程間隔"
+msgstr ""
+
+#: templates/admin/ai_translate.php:150
+msgid "每 5 分鐘"
+msgstr ""
+
+#: templates/admin/ai_translate.php:151
+msgid "每 15 分鐘"
+msgstr ""
+
+#: templates/admin/ai_translate.php:152
+msgid "每 30 分鐘"
+msgstr ""
+
+#: templates/admin/ai_translate.php:153
+msgid "每小時"
+msgstr ""
+
+#: templates/admin/ai_translate.php:157
+msgid "每批字串數"
+msgstr ""
+
+#: templates/admin/ai_translate.php:174
+msgid "全站待翻譯字串"
+msgstr ""
+
+#: templates/admin/ai_translate.php:201
+msgid "提示：字串需先被「探索」才會出現在待翻譯清單（瀏覽頁面或用文章編輯頁的「AI 翻譯此頁」按鈕即可探索）。"
+msgstr ""
+
+#: templates/admin/ai_translate.php:211
+msgid "自訂系統提示（System Prompt）"
+msgstr ""
+
+#: templates/admin/ai_translate.php:212
+#, php-format
+msgid "留空使用內建專業翻譯指令。可用變數：%source_lang%、%target_lang%"
+msgstr ""
+
+#: templates/admin/ai_translate.php:213
+#, php-format
+msgid "進階使用者可自訂翻譯風格／術語規則。可用變數：%source_lang%、%target_lang%。"
+msgstr ""
+
+#: templates/admin/auto_detect.php:67
+msgid "提示行為"
+msgstr ""
+
+#: templates/admin/auto_detect.php:69
+msgid "詢問訪客（顯示提示，由訪客決定）"
+msgstr ""
+
+#: templates/admin/auto_detect.php:70
+msgid "自動切換（首次到訪直接切換）"
+msgstr ""
+
+#: templates/admin/auto_detect.php:72
+msgid "建議使用「詢問訪客」，較友善且不影響 SEO。"
+msgstr ""
+
+#: templates/admin/auto_detect.php:75
+msgid "提示樣式"
+msgstr ""
+
+#: templates/admin/auto_detect.php:77
+msgid "角落提示卡"
+msgstr ""
+
+#: templates/admin/auto_detect.php:78
+msgid "頂部橫幅"
+msgstr ""
+
+#: templates/admin/auto_detect.php:82
+msgid "提示卡位置"
+msgstr ""
+
+#: templates/admin/auto_detect.php:84
+msgid "右下"
+msgstr ""
+
+#: templates/admin/auto_detect.php:85
+msgid "左下"
+msgstr ""
+
+#: templates/admin/auto_detect.php:89
+msgid "提示標題（留空使用預設）"
+msgstr ""
+
+#: templates/admin/auto_detect.php:93
+msgid "切換按鈕文字（留空使用預設）"
+msgstr ""
+
+#: templates/admin/auto_detect.php:107
+msgid "訪客首次到訪、且瀏覽器語言與當前頁面不同時，會看到："
+msgstr ""
+
+#: templates/admin/auto_detect.php:117
+msgid "維持目前語言"
+msgstr ""
+
+#: templates/admin/auto_detect.php:122
+msgid "需要至少兩個語言才能預覽。"
+msgstr ""
+
+#: templates/admin/auto_detect.php:124
+msgid "完全由 JavaScript 驅動，搜尋引擎爬蟲不受影響，不會造成重複內容問題。"
+msgstr ""
+
+#: templates/admin/content_rules.php:31
+msgid "該語言的首頁"
+msgstr ""
+
+#: templates/admin/content_rules.php:32
+msgid "該語言的文章列表頁"
+msgstr ""
+
+#: templates/admin/content_rules.php:39
+msgid "指定頁面（該語言版本）"
+msgstr ""
+
+#: templates/admin/content_rules.php:87
+msgid "啟用智慧重導"
+msgstr ""
+
+#: templates/admin/content_rules.php:92
+msgid "關閉後，被隱藏的單頁仍可直接造訪（僅從列表排除）。"
+msgstr ""
+
+#: templates/admin/content_rules.php:96
+msgid "套用的內容類型"
+msgstr ""
+
+#: templates/admin/content_rules.php:111
+msgid "文章被隱藏時，重導至"
+msgstr ""
+
+#: templates/admin/content_rules.php:113
+msgid "建議：該語言的文章列表頁。"
+msgstr ""
+
+#: templates/admin/content_rules.php:117
+msgid "頁面被隱藏時，重導至"
+msgstr ""
+
+#: templates/admin/content_rules.php:119
+msgid "建議：該語言的首頁。"
+msgstr ""
+
+#: templates/admin/content_rules.php:123
+msgid "其他內容類型被隱藏時，重導至"
+msgstr ""
+
+#: templates/admin/import_export.php:50
+msgid "將所有語言的翻譯匯出為 JSON 檔，可在外部編輯後再匯入。"
+msgstr ""
+
+#: templates/admin/import_export.php:53
+msgid "只匯出已翻譯的字串"
+msgstr ""
+
+#: templates/admin/import_export.php:67
+msgid "上傳先前匯出的 JSON 檔，依「原文」比對寫回翻譯。"
+msgstr ""
+
+#: templates/admin/import_export.php:73
+msgid "注意：匯入會覆寫相同原文的現有翻譯。"
+msgstr ""
+
+#: templates/admin/language_switcher.php:50
+msgid "預設樣式（短代碼未指定時）"
+msgstr ""
+
+#: templates/admin/language_switcher.php:58
+msgid "顯示格式"
+msgstr ""
+
+#: templates/admin/language_switcher.php:67
+msgid "全站浮動切換器"
+msgstr ""
+
+#: templates/admin/language_switcher.php:72
+msgid "開啟後，前台每頁固定角落會自動顯示浮動語言切換器（免放短代碼）。"
+msgstr ""
+
+#: templates/admin/language_switcher.php:75
+msgid "浮動位置"
+msgstr ""
+
+#: templates/admin/language_switcher.php:93
+msgid "在任何文章、頁面或小工具中插入："
+msgstr ""
+
+#: templates/admin/language_switcher.php:95
+msgid "可指定參數："
+msgstr ""
+
+#: templates/admin/language_switcher.php:101
+msgid "style：dropdown／inline／popup／floating；show：both／flag／name／short"
+msgstr ""
+
+#: templates/admin/language_switcher.php:127
+msgid "註：以上為實際前台元件，可直接點擊操作。「固定浮動」樣式需於前台頁面才會固定在角落。"
+msgstr ""
+
+#: templates/admin/overview.php:101
+msgid "衝突外掛自動停用"
+msgstr ""
+
+#: templates/admin/overview.php:103
+msgid "偵測到與本外掛功能重疊的多語外掛啟用時自動停用，避免同時運作造成衝突。"
+msgstr ""
+
+#: templates/admin/seo.php:54
+msgid "TranslatePress 已在頁面 <head> 自動輸出 hreflang，本區提供進一步控制。"
+msgstr ""
+
+#: templates/admin/seo.php:57
+msgid "地區標籤（如 zh-TW、en-US）"
+msgstr ""
+
+#: templates/admin/seo.php:61
+msgid "地區無關標籤（如 zh、en）"
+msgstr ""
+
+#: templates/admin/seo.php:68
+msgid "輸出 x-default 標籤"
+msgstr ""
+
+#: templates/admin/seo.php:70
+msgid "指定無對應語言時搜尋引擎的預設版本（建議開啟）。"
+msgstr ""
+
+#: templates/admin/seo.php:73
+msgid "x-default 指向語言"
+msgstr ""
+
+#: templates/admin/seo.php:93
+msgid "啟用翻譯網址 slug"
+msgstr ""
+
+#: templates/admin/seo.php:96
+msgid "開啟後，可在每篇文章／頁面的編輯畫面為各語言設定自訂網址 slug，例如英文 /sample/ 對應中文 /範例/。"
+msgstr ""
+
+#: templates/admin/seo.php:101
+msgid "需使用「漂亮的永久連結」。變更此設定或大量調整 slug 後，建議到「設定 → 永久連結」按一次儲存以重整路由。"
+msgstr ""
+
+#: templates/admin/seo.php:114
+msgid "偵測到的 SEO 外掛："
+msgstr ""
+
+#: templates/admin/seo.php:119
+#: templates/admin/seo.php:127
+msgid "已啟用 · 將加入語言 alternate"
+msgstr ""
+
+#: templates/admin/seo.php:121
+#: templates/admin/seo.php:129
+msgid "未安裝"
+msgstr ""
+
+#: templates/admin/seo.php:133
+msgid "安裝 Yoast 或 RankMath 後，本模組會自動在其 sitemap 的每個網址加入各語言的 xhtml:link alternate，提升多語索引品質。"
+msgstr ""
+
+#. translators: %s: TranslatePress 安裝連結
+#: ys-translatepress-addons.php:122
+#, php-format
+msgid "【YS TranslatePress Addons】需要先安裝並啟用 %s 才能運作。"
+msgstr ""
+
+#: ys-translatepress-addons.php:140
+msgid "設定"
+msgstr ""
