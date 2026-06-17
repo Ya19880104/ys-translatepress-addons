@@ -56,7 +56,9 @@ class YSTPAddonsCompat {
 
         if ( ! empty( $hit ) ) {
             deactivate_plugins( $hit );
-            set_transient( self::NOTICE_KEY, $hit, MINUTE_IN_SECONDS );
+            // 停用後沿用其既有的翻譯 slug／選單語言設定，讓功能無縫延續
+            $report = YSTPAddonsMigration::run();
+            set_transient( self::NOTICE_KEY, [ 'hit' => $hit, 'report' => $report ], MINUTE_IN_SECONDS );
         }
     }
 
@@ -64,13 +66,17 @@ class YSTPAddonsCompat {
      * 顯示已停用通知
      */
     public function render_notice(): void {
-        $hit = get_transient( self::NOTICE_KEY );
-        if ( empty( $hit ) ) {
+        $data = get_transient( self::NOTICE_KEY );
+        if ( empty( $data ) ) {
             return;
         }
         delete_transient( self::NOTICE_KEY );
 
-        $names = array_map( static fn( $p ) => dirname( (string) $p ), (array) $hit );
+        // 相容舊格式（純 $hit 陣列）與新格式（['hit'=>, 'report'=>]）
+        $hit    = isset( $data['hit'] ) ? (array) $data['hit'] : (array) $data;
+        $report = isset( $data['report'] ) && is_array( $data['report'] ) ? $data['report'] : [];
+
+        $names = array_map( static fn( $p ) => dirname( (string) $p ), $hit );
         echo '<div class="notice notice-warning is-dismissible"><p><strong>'
             . esc_html__( 'YS 多語增強', 'ys-translatepress-addons' ) . '：</strong> ';
         printf(
@@ -78,6 +84,36 @@ class YSTPAddonsCompat {
             esc_html__( '已自動停用與本外掛功能重疊的外掛（%s），以避免同時啟用造成衝突。如需自行管理，可至「多語增強 → 總覽 → 相容性」關閉「衝突外掛自動停用」。', 'ys-translatepress-addons' ),
             '<code>' . esc_html( implode( '、', $names ) ) . '</code>'
         );
+
+        // 沿用既有設定的結果摘要
+        $migrated = self::format_report( $report );
+        if ( '' !== $migrated ) {
+            echo '<br>' . esc_html__( '已沿用既有設定：', 'ys-translatepress-addons' ) . esc_html( $migrated );
+        }
         echo '</p></div>';
+    }
+
+    /**
+     * 將遷移報告整理為摘要文字
+     *
+     * @param array<string, mixed> $report
+     */
+    public static function format_report( array $report ): string {
+        $parts = [];
+        if ( ! empty( $report['slug'] ) ) {
+            $parts[] = sprintf(
+                /* translators: %d: 沿用的翻譯網址 slug 數量 */
+                __( '翻譯網址 slug %d 筆', 'ys-translatepress-addons' ),
+                (int) $report['slug']
+            );
+        }
+        if ( ! empty( $report['menu'] ) ) {
+            $parts[] = sprintf(
+                /* translators: %d: 沿用的選單項目數量 */
+                __( '選單語言 %d 項', 'ys-translatepress-addons' ),
+                (int) $report['menu']
+            );
+        }
+        return implode( '、', $parts );
     }
 }

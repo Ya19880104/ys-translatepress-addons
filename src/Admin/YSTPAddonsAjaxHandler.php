@@ -13,6 +13,8 @@ namespace YangSheep\TPAddons\Admin;
 
 use YangSheep\TPAddons\Database\YSTPAddonsSettingsRepo;
 use YangSheep\TPAddons\Support\YSTPAddonsModules;
+use YangSheep\TPAddons\Support\YSTPAddonsMigration;
+use YangSheep\TPAddons\Support\YSTPAddonsCompat;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -21,6 +23,7 @@ class YSTPAddonsAjaxHandler {
     public function __construct() {
         add_action( 'wp_ajax_ys_tp_save_settings', [ $this, 'save_settings' ] );
         add_action( 'wp_ajax_ys_tp_toggle_module', [ $this, 'toggle_module' ] );
+        add_action( 'wp_ajax_ys_tp_migrate', [ $this, 'migrate' ] );
     }
 
     /**
@@ -118,6 +121,29 @@ class YSTPAddonsAjaxHandler {
                 : __( '模組已停用', 'ys-translatepress-addons' ),
             'module'  => $module,
             'enabled' => $enabled,
+        ] );
+    }
+
+    /**
+     * 沿用既有翻譯設定（AJAX）
+     *
+     * 偵測既有的翻譯網址 slug 與選單語言資料，轉為本外掛欄位並啟用對應模組。
+     */
+    public function migrate(): void {
+        $this->guard();
+
+        $report  = YSTPAddonsMigration::run();
+        $summary = YSTPAddonsCompat::format_report( $report );
+
+        wp_send_json_success( [
+            'message' => '' !== $summary
+                ? sprintf(
+                    /* translators: %s: 沿用結果摘要 */
+                    __( '已沿用既有設定：%s', 'ys-translatepress-addons' ),
+                    $summary
+                )
+                : __( '未偵測到可沿用的既有翻譯網址 slug 或選單語言設定。', 'ys-translatepress-addons' ),
+            'report'  => $report,
         ] );
     }
 }

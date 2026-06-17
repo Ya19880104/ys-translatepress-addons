@@ -97,7 +97,7 @@ $impl_count    = count( array_filter( $modules, static fn( $m ) => ! empty( $m['
     <div class="ystp-panel" style="margin-top:26px;">
         <div class="ystp-panel-head"><span class="dashicons dashicons-shield-alt"></span> 相容性</div>
         <div class="ystp-panel-body ystp-form" data-form="compat">
-            <div class="ystp-field" style="margin-bottom:0;">
+            <div class="ystp-field">
                 <label><?php esc_html_e( '衝突外掛自動停用', 'ys-translatepress-addons' ); ?></label>
                 <label class="ystp-toggle" style="margin-top:4px;"><input type="checkbox" data-setting="compat_auto_disable" <?php checked( $compat_on, 1 ); ?> /><span class="ystp-slider"></span></label>
                 <p class="ystp-field-desc"><?php esc_html_e( '偵測到與本外掛功能重疊的多語外掛啟用時自動停用，避免同時運作造成衝突。', 'ys-translatepress-addons' ); ?></p>
@@ -106,6 +106,21 @@ $impl_count    = count( array_filter( $modules, static fn( $m ) => ! empty( $m['
                 <button type="button" class="ystp-btn ystp-btn-primary ystp-save-btn" data-form="compat">
                     <span class="dashicons dashicons-saved"></span> 儲存設定
                 </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="ystp-panel" style="margin-top:18px;">
+        <div class="ystp-panel-head"><span class="dashicons dashicons-update-alt"></span> 沿用既有翻譯設定</div>
+        <div class="ystp-panel-body">
+            <p class="ystp-field-desc" style="margin-top:0;">
+                <?php esc_html_e( '偵測既有的翻譯網址 slug 與選單語言設定（其他 TranslatePress 多語外掛留下的資料），轉為本外掛欄位並啟用對應模組，讓功能無縫延續。已設定的本外掛欄位不會被覆蓋。', 'ys-translatepress-addons' ); ?>
+            </p>
+            <div class="ystp-form-foot" style="align-items:center;gap:12px;">
+                <button type="button" class="ystp-btn ystp-btn-primary" id="ys-tp-migrate">
+                    <span class="dashicons dashicons-update-alt"></span> <?php esc_html_e( '開始沿用', 'ys-translatepress-addons' ); ?>
+                </button>
+                <span id="ys-tp-migrate-result" class="ystp-field-desc" style="margin:0;"></span>
             </div>
         </div>
     </div>

@@ -213,6 +213,28 @@
             .finally( function () { $btn.prop( 'disabled', false ); } );
     } );
 
+    /* ───────────── 沿用既有翻譯設定 ───────────── */
+    $( document ).on( 'click', '#ys-tp-migrate', function () {
+        var $btn = $( this );
+        var $r   = $( '#ys-tp-migrate-result' );
+        $btn.prop( 'disabled', true );
+        var oldHtml = $btn.html();
+        $btn.html( '<span class="dashicons dashicons-update"></span> ' + cfg.i18n.saving );
+        $r.text( '' ).css( 'color', '#7a8a96' );
+
+        $.post( cfg.ajax_url, { action: 'ys_tp_migrate', nonce: cfg.nonce } )
+            .done( function ( res ) {
+                if ( res && res.success ) {
+                    $r.text( '✓ ' + res.data.message ).css( 'color', '#5b9a8b' );
+                    toast( res.data.message );
+                } else {
+                    $r.text( '✕ ' + ( ( res && res.data && res.data.message ) || cfg.i18n.error ) ).css( 'color', '#b3413a' );
+                }
+            } )
+            .fail( function () { $r.text( cfg.i18n.error ).css( 'color', '#b3413a' ); } )
+            .always( function () { $btn.prop( 'disabled', false ).html( oldHtml ); } );
+    } );
+
     /* ───────────── 短代碼點擊複製 ───────────── */
     $( document ).on( 'click', '.ystp-sc-code[data-copy]', function () {
         var $c = $( this );

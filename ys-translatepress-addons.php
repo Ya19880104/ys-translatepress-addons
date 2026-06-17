@@ -3,7 +3,7 @@
  * Plugin Name: YS TranslatePress Addons
  * Plugin URI:  https://yangsheep.com.tw
  * Description: TranslatePress 多語言強化套件 — 解鎖語言數量、SEO、AI 翻譯（OpenAI／Gemini／Claude）、選單語言控制、語言自動偵測、語言切換器、內容語言規則與翻譯匯出匯入。
- * Version:     0.7.2
+ * Version:     0.8.0
  * Author:      YANGSHEEP DESIGN
  * Author URI:  https://yangsheep.com.tw
  * License:     GPL-2.0-or-later
@@ -21,7 +21,7 @@ defined( 'ABSPATH' ) || exit;
 /* ──────────────────────────────────────────────
  * 常數定義
  * ────────────────────────────────────────────── */
-define( 'YS_TP_VERSION', '0.7.2' );
+define( 'YS_TP_VERSION', '0.8.0' );
 define( 'YS_TP_PLUGIN_FILE', __FILE__ );
 define( 'YS_TP_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'YS_TP_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
