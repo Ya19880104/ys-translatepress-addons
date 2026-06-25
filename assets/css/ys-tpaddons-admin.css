@@ -1,23 +1,25 @@
 /**
  * YS TranslatePress Addons — 後台樣式
- * 設計：乾淨白底 + 莫蘭迪藍灰 + navy 標題 + 橙金 accent
+ * 設計：乾淨白底 + Shopline 品牌紫 accent（對齊 YS SHOPLINE 後台調性）
  */
 
 .ystp-wrap {
-    --ystp-navy: #1f2d3d;
-    --ystp-blue: #8fa8b8;
-    --ystp-blue-l: #b3c7d3;
-    --ystp-accent: #d98a3d;
-    --ystp-accent-d: #c2762c;
-    --ystp-on: #5b9a8b;
-    --ystp-off: #c3ccd4;
+    --ystp-navy: #1d2327;
+    --ystp-blue: #c98fbf;
+    --ystp-blue-l: #e3c8de;
+    --ystp-accent: #cc99c2;
+    --ystp-accent-d: #b888ad;
+    --ystp-accent-l: #fbf4fa;
+    --ystp-on: #cc99c2;
+    --ystp-ok: #46b450;
+    --ystp-off: #c8ccd2;
     --ystp-bg: #f4f6f8;
     --ystp-card: #ffffff;
-    --ystp-border: #e3e8ec;
-    --ystp-text: #2b3a47;
-    --ystp-muted: #7a8a96;
-    --ystp-radius: 12px;
-    --ystp-shadow: 0 1px 3px rgba(31, 45, 61, .06), 0 6px 18px rgba(31, 45, 61, .05);
+    --ystp-border: #dcdcde;
+    --ystp-text: #50575e;
+    --ystp-muted: #646970;
+    --ystp-radius: 8px;
+    --ystp-shadow: 0 1px 2px rgba(29, 35, 39, .05), 0 3px 10px rgba(29, 35, 39, .04);
 
     margin: 16px 20px 40px 2px;
     color: var(--ystp-text);
@@ -36,7 +38,7 @@
     align-items: center;
     justify-content: space-between;
     gap: 20px;
-    background: linear-gradient(120deg, #8fa8b8 0%, #b3c7d3 100%);
+    background: linear-gradient(120deg, #cc99c2 0%, #d9b3d1 100%);
     border-radius: var(--ystp-radius);
     padding: 26px 30px;
     color: #fff;
@@ -66,7 +68,7 @@
     background: #fff; color: var(--ystp-navy);
 }
 .ystp-pill .ystp-dot { width: 8px; height: 8px; border-radius: 50%; }
-.ystp-pill-on .ystp-dot { background: var(--ystp-on); box-shadow: 0 0 0 3px rgba(91,154,139,.2); }
+.ystp-pill-on .ystp-dot { background: var(--ystp-ok); box-shadow: 0 0 0 3px rgba(70,180,80,.2); }
 .ystp-pill-off { color: #9aa7b1; }
 .ystp-pill-off .ystp-dot { background: #b9c4cc; }
 
@@ -114,7 +116,7 @@
     transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
 }
 .ystp-card:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(31,45,61,.08), 0 12px 28px rgba(31,45,61,.07); }
-.ystp-card.is-on { border-color: #bcd3cc; }
+.ystp-card.is-on { border-color: #e7cfe2; }
 .ystp-card.is-on::before {
     content: ""; position: absolute; left: 0; top: 16px; bottom: 16px; width: 3px;
     border-radius: 3px; background: var(--ystp-on);
@@ -126,7 +128,7 @@
     display: inline-flex; align-items: center; justify-content: center;
     background: #eef2f5; color: var(--ystp-blue); border-radius: 10px;
 }
-.ystp-card.is-on .ystp-card-icon { background: #e7f0ed; color: var(--ystp-on); }
+.ystp-card.is-on .ystp-card-icon { background: var(--ystp-accent-l); color: var(--ystp-on); }
 .ystp-card-title { font-size: 15.5px; color: var(--ystp-navy); margin: 0 0 6px; }
 .ystp-card-desc { font-size: 13px; color: var(--ystp-muted); line-height: 1.6; margin: 0 0 16px; min-height: 50px; }
 .ystp-card-foot { display: flex; align-items: center; justify-content: space-between; }
@@ -215,7 +217,7 @@
     width: 100%; max-width: 240px; padding: 8px 12px;
     border: 1px solid var(--ystp-border); border-radius: 8px; font-size: 14px;
 }
-.ystp-field input:focus, .ystp-field select:focus { border-color: var(--ystp-blue); outline: none; box-shadow: 0 0 0 3px rgba(143,168,184,.18); }
+.ystp-field input:focus, .ystp-field select:focus { border-color: var(--ystp-accent); outline: none; box-shadow: 0 0 0 3px rgba(204,153,194,.22); }
 .ystp-field-desc { font-size: 12.5px; color: var(--ystp-muted); margin: 6px 0 0; }
 .ystp-form-foot { margin-top: 8px; }
 
