@@ -13,6 +13,7 @@ defined( 'ABSPATH' ) || exit;
 
 use YangSheep\TPAddons\Database\YSTPAddonsSettingsRepo;
 use YangSheep\TPAddons\Modules\LanguageSwitcher\YSTPAddonsLanguageSwitcher;
+use YangSheep\TPAddons\Support\YSTPAddonsTP;
 
 $def_style  = (string) YSTPAddonsSettingsRepo::get( 'switcher_default_style', 'dropdown' );
 $show       = (string) YSTPAddonsSettingsRepo::get( 'switcher_show', 'both' );
@@ -20,6 +21,11 @@ $float_on   = (int) YSTPAddonsSettingsRepo::get( 'switcher_floating_enabled', 0 
 $float_pos  = (string) YSTPAddonsSettingsRepo::get( 'switcher_floating_position', 'bottom-right' );
 
 $switcher = new YSTPAddonsLanguageSwitcher();
+
+// 取得各語言的 TranslatePress 預設名稱（暫時略過自訂覆寫），作為輸入框提示
+YSTPAddonsLanguageSwitcher::$bypass_name_filter = true;
+$default_names = YSTPAddonsTP::languages();
+YSTPAddonsLanguageSwitcher::$bypass_name_filter = false;
 
 $styles = [ 'dropdown' => '下拉選單', 'inline' => '並排清單', 'popup' => '彈出視窗', 'floating' => '固定浮動', 'map' => '世界地圖' ];
 $shows  = [ 'both' => '旗幟 + 名稱', 'flag' => '只有旗幟', 'name' => '只有名稱', 'short' => '旗幟 + 短碼' ];
@@ -94,6 +100,29 @@ $poses  = [ 'bottom-right' => '右下', 'bottom-left' => '左下', 'top-right' =
                 <p><code style="display:block;padding:10px 12px;background:#f4f6f8;border-radius:8px;">[ys_language_switcher]</code></p>
                 <p class="ystp-field-desc" style="margin-top:12px;"><?php esc_html_e( '可指定參數 — style：dropdown／inline／popup／floating／map；show：both（旗幟+名稱）／flag／name／short。', 'ys-translatepress-addons' ); ?></p>
                 <p class="ystp-field-desc"><?php esc_html_e( '範例：', 'ys-translatepress-addons' ); ?> <code>[ys_language_switcher style="inline" show="flag"]</code></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="ystp-panel">
+        <div class="ystp-panel-head"><span class="dashicons dashicons-translation"></span> 語言名稱自訂</div>
+        <div class="ystp-panel-body ystp-form" data-form="langnames">
+            <p class="ystp-field-desc" style="margin-top:0;"><?php esc_html_e( '自訂各語言在切換器、選單等處顯示的名稱（例如把「中文」改成「繁體中文」）。留空＝沿用 TranslatePress 預設；此名稱在所有語言版本下都顯示同一值。', 'ys-translatepress-addons' ); ?></p>
+            <div class="ystp-langname-grid">
+                <?php foreach ( $default_names as $code => $dname ) :
+                    $lc  = strtolower( (string) $code );
+                    $cur = (string) YSTPAddonsSettingsRepo::get( 'langname_' . $lc, '' );
+                    ?>
+                    <div class="ystp-field" style="margin-bottom:12px;">
+                        <label><?php echo esc_html( (string) $code ); ?> <span class="ystp-muted" style="font-weight:400;">（<?php esc_html_e( '預設', 'ys-translatepress-addons' ); ?>：<?php echo esc_html( (string) $dname ); ?>）</span></label>
+                        <input type="text" class="regular-text" style="width:100%;max-width:320px;margin-top:4px;" data-setting="langname_<?php echo esc_attr( $lc ); ?>" value="<?php echo esc_attr( $cur ); ?>" placeholder="<?php echo esc_attr( (string) $dname ); ?>" />
+                    </div>
+                <?php endforeach; ?>
+            </div>
+            <div class="ystp-form-foot">
+                <button type="button" class="ystp-btn ystp-btn-primary ystp-save-btn" data-form="langnames">
+                    <span class="dashicons dashicons-saved"></span> 儲存設定
+                </button>
             </div>
         </div>
     </div>

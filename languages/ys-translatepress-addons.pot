@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: YS TranslatePress Addons 0.8.0\n"
+"Project-Id-Version: YS TranslatePress Addons 0.9.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/ys-translatepress-addons\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-06-17T04:41:47+00:00\n"
+"POT-Creation-Date: 2026-06-25T08:01:49+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: ys-translatepress-addons\n"
@@ -170,23 +170,23 @@ msgstr ""
 msgid "找不到翻譯供應商"
 msgstr ""
 
-#: src/Modules/ContentRules/YSTPAddonsContentRules.php:65
+#: src/Modules/ContentRules/YSTPAddonsContentRules.php:68
 msgid "多語顯示規則"
 msgstr ""
 
-#: src/Modules/ContentRules/YSTPAddonsContentRules.php:84
+#: src/Modules/ContentRules/YSTPAddonsContentRules.php:87
 msgid "所有語言顯示"
 msgstr ""
 
-#: src/Modules/ContentRules/YSTPAddonsContentRules.php:85
+#: src/Modules/ContentRules/YSTPAddonsContentRules.php:88
 msgid "排除以下語言"
 msgstr ""
 
-#: src/Modules/ContentRules/YSTPAddonsContentRules.php:86
+#: src/Modules/ContentRules/YSTPAddonsContentRules.php:89
 msgid "只在以下語言顯示"
 msgstr ""
 
-#: src/Modules/ContentRules/YSTPAddonsContentRules.php:96
+#: src/Modules/ContentRules/YSTPAddonsContentRules.php:99
 msgid "切換到被隱藏的語言時，此內容會從列表移除；若直接造訪則重導至設定的對應頁。"
 msgstr ""
 
@@ -204,18 +204,18 @@ msgstr ""
 msgid "匯入完成，更新 %d 個翻譯。"
 msgstr ""
 
-#: src/Modules/LanguageSwitcher/YSTPAddonsLanguageSwitcher.php:176
-#: src/Modules/LanguageSwitcher/YSTPAddonsLanguageSwitcher.php:178
-#: src/Modules/LanguageSwitcher/YSTPAddonsLanguageSwitcher.php:232
+#: src/Modules/LanguageSwitcher/YSTPAddonsLanguageSwitcher.php:202
+#: src/Modules/LanguageSwitcher/YSTPAddonsLanguageSwitcher.php:204
+#: src/Modules/LanguageSwitcher/YSTPAddonsLanguageSwitcher.php:258
 msgid "選擇語言"
 msgstr ""
 
-#: src/Modules/LanguageSwitcher/YSTPAddonsLanguageSwitcher.php:177
-#: src/Modules/LanguageSwitcher/YSTPAddonsLanguageSwitcher.php:233
+#: src/Modules/LanguageSwitcher/YSTPAddonsLanguageSwitcher.php:203
+#: src/Modules/LanguageSwitcher/YSTPAddonsLanguageSwitcher.php:259
 msgid "關閉"
 msgstr ""
 
-#: src/Modules/LanguageSwitcher/YSTPAddonsLanguageSwitcher.php:234
+#: src/Modules/LanguageSwitcher/YSTPAddonsLanguageSwitcher.php:260
 msgid "選擇你的語言"
 msgstr ""
 
@@ -545,117 +545,145 @@ msgstr ""
 msgid "注意：匯入會覆寫相同原文的現有翻譯。"
 msgstr ""
 
-#: templates/admin/language_switcher.php:50
+#: templates/admin/language_switcher.php:56
 msgid "預設樣式（短代碼未指定時）"
 msgstr ""
 
-#: templates/admin/language_switcher.php:58
+#: templates/admin/language_switcher.php:64
 msgid "顯示格式"
 msgstr ""
 
-#: templates/admin/language_switcher.php:67
+#: templates/admin/language_switcher.php:73
 msgid "全站浮動切換器"
 msgstr ""
 
-#: templates/admin/language_switcher.php:72
+#: templates/admin/language_switcher.php:78
 msgid "開啟後，前台每頁固定角落會自動顯示浮動語言切換器（免放短代碼）。"
 msgstr ""
 
-#: templates/admin/language_switcher.php:75
+#: templates/admin/language_switcher.php:81
 msgid "浮動位置"
 msgstr ""
 
-#: templates/admin/language_switcher.php:93
+#: templates/admin/language_switcher.php:99
 msgid "在任何文章、頁面或小工具中插入下方短代碼。不帶參數時使用上方「預設樣式」："
 msgstr ""
 
-#: templates/admin/language_switcher.php:95
+#: templates/admin/language_switcher.php:101
 msgid "可指定參數 — style：dropdown／inline／popup／floating／map；show：both（旗幟+名稱）／flag／name／short。"
 msgstr ""
 
-#: templates/admin/language_switcher.php:96
+#: templates/admin/language_switcher.php:102
 msgid "範例："
 msgstr ""
 
-#: templates/admin/language_switcher.php:104
+#: templates/admin/language_switcher.php:110
+msgid "自訂各語言在切換器、選單等處顯示的名稱（例如把「中文」改成「繁體中文」）。留空＝沿用 TranslatePress 預設；此名稱在所有語言版本下都顯示同一值。"
+msgstr ""
+
+#: templates/admin/language_switcher.php:117
+msgid "預設"
+msgstr ""
+
+#: templates/admin/language_switcher.php:133
 msgid "以下為實際前台元件，可直接點擊操作；每個樣式下方為對應短代碼，點一下即可複製。"
 msgstr ""
 
-#: templates/admin/language_switcher.php:122
+#: templates/admin/language_switcher.php:151
 msgid "需於前台頁面才會固定在角落顯示"
 msgstr ""
 
-#: templates/admin/language_switcher.php:128
+#: templates/admin/language_switcher.php:157
 msgid "點一下複製"
 msgstr ""
 
-#: templates/admin/overview.php:101
+#: templates/admin/overview.php:104
 msgid "衝突外掛自動停用"
 msgstr ""
 
-#: templates/admin/overview.php:103
+#: templates/admin/overview.php:106
 msgid "偵測到與本外掛功能重疊的多語外掛啟用時自動停用，避免同時運作造成衝突。"
 msgstr ""
 
-#: templates/admin/overview.php:117
+#: templates/admin/overview.php:109
+msgid "隱藏 TranslatePress 升級／推廣提示"
+msgstr ""
+
+#: templates/admin/overview.php:111
+msgid "隱藏 TranslatePress 在後台設定頁與翻譯編輯器顯示的升級／推廣區塊，讓後台更精簡（僅以 CSS 隱藏，不更動 TranslatePress 任何功能）。"
+msgstr ""
+
+#: templates/admin/overview.php:125
 msgid "偵測既有的翻譯網址 slug 與選單語言設定（其他 TranslatePress 多語外掛留下的資料），轉為本外掛欄位並啟用對應模組，讓功能無縫延續。已設定的本外掛欄位不會被覆蓋。"
 msgstr ""
 
-#: templates/admin/overview.php:121
+#: templates/admin/overview.php:129
 msgid "開始沿用"
 msgstr ""
 
-#: templates/admin/seo.php:54
+#: templates/admin/seo.php:56
+msgid "翻譯 SEO 中繼資料"
+msgstr ""
+
+#: templates/admin/seo.php:59
+msgid "開啟後，頁面標題（<title>）、meta 描述、Open Graph／Twitter 社群標籤與圖片 alt 會成為可翻譯字串，可逐語言翻譯，前台輸出時自動替換為對應語言版本。"
+msgstr ""
+
+#: templates/admin/seo.php:64
+msgid "翻譯方式：到 TranslatePress 的「翻譯編輯器」開啟任一頁面，即可在 <head> 中繼資料逐語言翻譯；或於前台瀏覽各頁讓字串被偵測後，到「字串翻譯」清單翻譯，也可用「AI 翻譯」模組一併處理。"
+msgstr ""
+
+#: templates/admin/seo.php:77
 msgid "TranslatePress 已在頁面 <head> 自動輸出 hreflang，本區提供進一步控制。"
 msgstr ""
 
-#: templates/admin/seo.php:57
+#: templates/admin/seo.php:80
 msgid "地區標籤（如 zh-TW、en-US）"
 msgstr ""
 
-#: templates/admin/seo.php:61
+#: templates/admin/seo.php:84
 msgid "地區無關標籤（如 zh、en）"
 msgstr ""
 
-#: templates/admin/seo.php:68
+#: templates/admin/seo.php:91
 msgid "輸出 x-default 標籤"
 msgstr ""
 
-#: templates/admin/seo.php:70
+#: templates/admin/seo.php:93
 msgid "指定無對應語言時搜尋引擎的預設版本（建議開啟）。"
 msgstr ""
 
-#: templates/admin/seo.php:73
+#: templates/admin/seo.php:96
 msgid "x-default 指向語言"
 msgstr ""
 
-#: templates/admin/seo.php:93
+#: templates/admin/seo.php:116
 msgid "啟用翻譯網址 slug"
 msgstr ""
 
-#: templates/admin/seo.php:96
+#: templates/admin/seo.php:119
 msgid "開啟後，可在每篇文章／頁面的編輯畫面為各語言設定自訂網址 slug，例如英文 /sample/ 對應中文 /範例/。"
 msgstr ""
 
-#: templates/admin/seo.php:101
+#: templates/admin/seo.php:124
 msgid "需使用「漂亮的永久連結」。變更此設定或大量調整 slug 後，建議到「設定 → 永久連結」按一次儲存以重整路由。"
 msgstr ""
 
-#: templates/admin/seo.php:114
+#: templates/admin/seo.php:137
 msgid "偵測到的 SEO 外掛："
 msgstr ""
 
-#: templates/admin/seo.php:119
-#: templates/admin/seo.php:127
+#: templates/admin/seo.php:142
+#: templates/admin/seo.php:150
 msgid "已啟用 · 將加入語言 alternate"
 msgstr ""
 
-#: templates/admin/seo.php:121
-#: templates/admin/seo.php:129
+#: templates/admin/seo.php:144
+#: templates/admin/seo.php:152
 msgid "未安裝"
 msgstr ""
 
-#: templates/admin/seo.php:133
+#: templates/admin/seo.php:156
 msgid "安裝 Yoast 或 RankMath 後，本模組會自動在其 sitemap 的每個網址加入各語言的 xhtml:link alternate，提升多語索引品質。"
 msgstr ""
 

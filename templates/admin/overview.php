@@ -93,7 +93,10 @@ $impl_count    = count( array_filter( $modules, static fn( $m ) => ! empty( $m['
         <?php endforeach; ?>
     </div>
 
-    <?php $compat_on = (int) \YangSheep\TPAddons\Database\YSTPAddonsSettingsRepo::get( 'compat_auto_disable', 1 ); ?>
+    <?php
+    $compat_on   = (int) \YangSheep\TPAddons\Database\YSTPAddonsSettingsRepo::get( 'compat_auto_disable', 1 );
+    $hide_upsell = (int) \YangSheep\TPAddons\Database\YSTPAddonsSettingsRepo::get( 'hide_tp_upsell', 0 );
+    ?>
     <div class="ystp-panel" style="margin-top:26px;">
         <div class="ystp-panel-head"><span class="dashicons dashicons-shield-alt"></span> 相容性</div>
         <div class="ystp-panel-body ystp-form" data-form="compat">
@@ -101,6 +104,11 @@ $impl_count    = count( array_filter( $modules, static fn( $m ) => ! empty( $m['
                 <label><?php esc_html_e( '衝突外掛自動停用', 'ys-translatepress-addons' ); ?></label>
                 <label class="ystp-toggle" style="margin-top:4px;"><input type="checkbox" data-setting="compat_auto_disable" <?php checked( $compat_on, 1 ); ?> /><span class="ystp-slider"></span></label>
                 <p class="ystp-field-desc"><?php esc_html_e( '偵測到與本外掛功能重疊的多語外掛啟用時自動停用，避免同時運作造成衝突。', 'ys-translatepress-addons' ); ?></p>
+            </div>
+            <div class="ystp-field">
+                <label><?php esc_html_e( '隱藏 TranslatePress 升級／推廣提示', 'ys-translatepress-addons' ); ?></label>
+                <label class="ystp-toggle" style="margin-top:4px;"><input type="checkbox" data-setting="hide_tp_upsell" <?php checked( $hide_upsell, 1 ); ?> /><span class="ystp-slider"></span></label>
+                <p class="ystp-field-desc"><?php esc_html_e( '隱藏 TranslatePress 在後台設定頁與翻譯編輯器顯示的升級／推廣區塊，讓後台更精簡（僅以 CSS 隱藏，不更動 TranslatePress 任何功能）。', 'ys-translatepress-addons' ); ?></p>
             </div>
             <div class="ystp-form-foot">
                 <button type="button" class="ystp-btn ystp-btn-primary ystp-save-btn" data-form="compat">

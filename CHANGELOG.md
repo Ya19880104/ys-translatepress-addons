@@ -2,6 +2,15 @@
 
 本檔案記錄所有重要變更，格式依循 [Keep a Changelog](https://keepachangelog.com/)。
 
+## [0.9.0] - 2026-06-17 — SEO 中繼資料翻譯 + 語言名稱自訂
+
+### 新增
+- **SEO 中繼資料翻譯** — 頁面標題（`<title>`）、meta 描述、Open Graph／Twitter 社群標籤與圖片 `alt` 成為可翻譯字串，可於 TranslatePress 翻譯編輯器逐語言翻譯，前台輸出時自動替換為對應語言版本。透過 TranslatePress 核心既有的 `trp_node_accessors` 機制實作，於「SEO 增強」模組以「翻譯 SEO 中繼資料」開關控制（預設開啟）。
+  - 節點型別沿用核心約定鍵（`page_title`／`meta_desc`／`meta_desc_img`），編輯器自動將其歸入「Meta Information」群組並逐一標示（Page Title／Description／OG Title／OG Site Name／OG Image／OG Image Alt／Twitter 等），而非混入一般字串清單。
+- **語言名稱自訂** — 於「語言切換器」設定頁可為每個語言自訂顯示名稱（例如把「Chinese／中文」改成「繁體中文」），透過 TranslatePress 核心 `trp_language_name` filter 套用於切換器、選單、hreflang 等所有語言名稱顯示處；留空＝沿用 TranslatePress 預設。
+- **隱藏 TranslatePress 升級／推廣提示**（選用）— 可隱藏 TranslatePress 後台設定頁與翻譯編輯器的升級／推廣區塊，讓後台介面更精簡；僅以 CSS 隱藏既知容器、不更動 TranslatePress 任何功能，於「總覽 → 相容性」開關控制（預設關閉）。
+- **內容語言規則：自訂列表過濾 filter** — 新增 `ys_tp_filter_ids`（過濾 post ID 陣列）與 `ys_tp_is_hidden`（判斷單篇是否於當前語言隱藏）兩個 filter，供頁面建構器迴圈、已存 ID 陣列等非標準 `WP_Query` 列表顯式套用語言顯示規則。
+
 ## [0.8.0] - 2026-06-17 — 一鍵沿用既有翻譯設定
 
 ### 新增

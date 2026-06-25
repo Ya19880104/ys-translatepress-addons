@@ -32,6 +32,9 @@ class YSTPAddonsContentRules implements YSTPAddonsModuleInterface {
         } else {
             add_action( 'pre_get_posts', [ $this, 'exclude_from_lists' ] );
             add_action( 'template_redirect', [ $this, 'maybe_redirect' ] );
+            // 供自訂列表(非 WP_Query／已存 ID 陣列／頁面建構器迴圈)顯式過濾用
+            add_filter( 'ys_tp_filter_ids', [ $this, 'filter_ids_hook' ], 10, 2 );
+            add_filter( 'ys_tp_is_hidden', [ $this, 'is_hidden_hook' ], 10, 2 );
         }
     }
 
@@ -194,6 +197,34 @@ class YSTPAddonsContentRules implements YSTPAddonsModuleInterface {
 
         set_transient( $cache_key, $hidden, DAY_IN_SECONDS );
         return $hidden;
+    }
+
+    /**
+     * 公開：過濾掉「指定(或當前)語言被隱藏」的 post IDs。
+     * 供自訂列表(非 WP_Query／已存 ID 陣列／頁面建構器迴圈)顯式呼叫。
+     *
+     * @param int[]       $ids
+     * @param string|null $lang 預設當前語言
+     * @return int[]
+     */
+    public static function filter_ids( array $ids, ?string $lang = null ): array {
+        $lang = $lang ?: YSTPAddonsTP::current_language();
+        return array_values( array_filter( $ids, static function ( $id ) use ( $lang ) {
+            return ! self::is_hidden( (int) $id, $lang );
+        } ) );
+    }
+
+    /** filter：apply_filters( 'ys_tp_filter_ids', int[] $ids, ?string $lang ) → 過濾後 IDs */
+    public function filter_ids_hook( $ids, $lang = null ): array {
+        if ( ! is_array( $ids ) ) {
+            return [];
+        }
+        return self::filter_ids( $ids, ( is_string( $lang ) && '' !== $lang ) ? $lang : null );
+    }
+
+    /** filter：apply_filters( 'ys_tp_is_hidden', bool $hidden, int $post_id ) → 當前語言是否隱藏 */
+    public function is_hidden_hook( $hidden, $post_id = 0 ): bool {
+        return $hidden ? true : self::is_hidden( (int) $post_id, YSTPAddonsTP::current_language() );
     }
 
     public function flush_cache(): void {

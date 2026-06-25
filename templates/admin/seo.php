@@ -14,6 +14,7 @@ defined( 'ABSPATH' ) || exit;
 use YangSheep\TPAddons\Database\YSTPAddonsSettingsRepo;
 use YangSheep\TPAddons\Support\YSTPAddonsTP;
 
+$meta_tr   = (int) YSTPAddonsSettingsRepo::get( 'seo_meta_translate', 1 );
 $region    = (int) YSTPAddonsSettingsRepo::get( 'seo_hreflang_region', 1 );
 $region_i  = (int) YSTPAddonsSettingsRepo::get( 'seo_hreflang_region_independent', 1 );
 $xd_on     = (int) YSTPAddonsSettingsRepo::get( 'seo_xdefault_enabled', 0 );
@@ -47,6 +48,28 @@ $has_rankmath = class_exists( 'RankMath' );
             此模組目前為停用狀態。請至 <a href="<?php echo esc_url( admin_url( 'admin.php?page=ys-tp-addons' ) ); ?>">總覽</a> 啟用後生效。
         </div>
     <?php endif; ?>
+
+    <div class="ystp-panel">
+        <div class="ystp-panel-head"><span class="dashicons dashicons-translation"></span> SEO 中繼資料翻譯</div>
+        <div class="ystp-panel-body ystp-form" data-form="seo-meta">
+            <div class="ystp-field">
+                <label><?php esc_html_e( '翻譯 SEO 中繼資料', 'ys-translatepress-addons' ); ?></label>
+                <label class="ystp-toggle" style="margin-top:4px;"><input type="checkbox" data-setting="seo_meta_translate" <?php checked( $meta_tr, 1 ); ?> /><span class="ystp-slider"></span></label>
+                <p class="ystp-field-desc">
+                    <?php esc_html_e( '開啟後，頁面標題（<title>）、meta 描述、Open Graph／Twitter 社群標籤與圖片 alt 會成為可翻譯字串，可逐語言翻譯，前台輸出時自動替換為對應語言版本。', 'ys-translatepress-addons' ); ?>
+                </p>
+            </div>
+            <div class="ystp-note ystp-note-warn" style="margin:6px 0 14px;">
+                <span class="dashicons dashicons-info-outline"></span>
+                <?php esc_html_e( '翻譯方式：到 TranslatePress 的「翻譯編輯器」開啟任一頁面，即可在 <head> 中繼資料逐語言翻譯；或於前台瀏覽各頁讓字串被偵測後，到「字串翻譯」清單翻譯，也可用「AI 翻譯」模組一併處理。', 'ys-translatepress-addons' ); ?>
+            </div>
+            <div class="ystp-form-foot">
+                <button type="button" class="ystp-btn ystp-btn-primary ystp-save-btn" data-form="seo-meta">
+                    <span class="dashicons dashicons-saved"></span> 儲存設定
+                </button>
+            </div>
+        </div>
+    </div>
 
     <div class="ystp-panel">
         <div class="ystp-panel-head"><span class="dashicons dashicons-admin-site-alt3"></span> hreflang 多語標記</div>

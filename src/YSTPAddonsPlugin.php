@@ -46,6 +46,9 @@ class YSTPAddonsPlugin {
         // 模組在前後台都需要啟動（解鎖、切換器、偵測等前台亦需作用）
         $this->boot_modules();
 
+        // TranslatePress 後台介面精簡（前後台共用：翻譯編輯器為前台模式）
+        ( new \YangSheep\TPAddons\Support\YSTPAddonsTPCleanup() )->boot();
+
         if ( is_admin() ) {
             new YSTPAddonsAdmin();
             new YSTPAddonsAjaxHandler();

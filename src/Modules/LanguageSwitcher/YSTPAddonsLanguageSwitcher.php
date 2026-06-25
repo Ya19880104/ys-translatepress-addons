@@ -20,8 +20,14 @@ defined( 'ABSPATH' ) || exit;
 
 class YSTPAddonsLanguageSwitcher implements YSTPAddonsModuleInterface {
 
+    /** @var bool 暫時略過自訂語言名稱（供後台取得 TranslatePress 預設名稱） */
+    public static bool $bypass_name_filter = false;
+
     public function boot(): void {
         add_shortcode( 'ys_language_switcher', [ $this, 'shortcode' ] );
+
+        // 自訂語言顯示名稱（套用於切換器、選單、hreflang 等所有 TP 語言名稱顯示處）
+        add_filter( 'trp_language_name', [ self::class, 'filter_language_name' ], 20, 4 );
 
         if ( ! is_admin() ) {
             add_action( 'wp_enqueue_scripts', [ $this, 'enqueue' ] );
@@ -32,6 +38,26 @@ class YSTPAddonsLanguageSwitcher implements YSTPAddonsModuleInterface {
                 add_filter( 'trp_floater_ls_html_v2', '__return_empty_string', 99 );
             }
         }
+    }
+
+    /**
+     * 自訂語言顯示名稱（掛 TranslatePress `trp_language_name`）
+     *
+     * 優先序 20，晚於核心 beautify（10），確保自訂名稱為最終結果。
+     * 設定鍵 `langname_{小寫語言碼}`，留空則沿用 TP 預設。
+     *
+     * @param string      $name              TranslatePress 計算出的名稱
+     * @param string      $code              語言碼（如 zh_TW）
+     * @param string|null $english_or_native english_name／native_name
+     * @param array       $codes             查詢的語言碼陣列
+     * @return string
+     */
+    public static function filter_language_name( $name, $code, $english_or_native = null, $codes = [] ) {
+        if ( self::$bypass_name_filter ) {
+            return $name;
+        }
+        $custom = (string) YSTPAddonsSettingsRepo::get( 'langname_' . strtolower( (string) $code ), '' );
+        return '' !== trim( $custom ) ? $custom : (string) $name;
     }
 
     public function enqueue(): void {
