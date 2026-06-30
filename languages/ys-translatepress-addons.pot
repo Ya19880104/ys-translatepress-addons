@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: YS TranslatePress Addons 0.9.0\n"
+"Project-Id-Version: YS TranslatePress Addons 0.9.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/ys-translatepress-addons\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-06-25T08:01:49+00:00\n"
+"POT-Creation-Date: 2026-06-30T04:27:42+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: ys-translatepress-addons\n"
@@ -485,48 +485,84 @@ msgstr ""
 msgid "完全由 JavaScript 驅動，搜尋引擎爬蟲不受影響，不會造成重複內容問題。"
 msgstr ""
 
-#: templates/admin/content_rules.php:31
-msgid "該語言的首頁"
-msgstr ""
-
-#: templates/admin/content_rules.php:32
-msgid "該語言的文章列表頁"
+#: templates/admin/content_rules.php:37
+msgid "未指定（用全域預設跳轉頁）"
 msgstr ""
 
 #: templates/admin/content_rules.php:39
+msgid "該語言的首頁"
+msgstr ""
+
+#: templates/admin/content_rules.php:40
+msgid "該語言的文章列表頁"
+msgstr ""
+
+#: templates/admin/content_rules.php:46
 msgid "指定頁面（該語言版本）"
 msgstr ""
 
-#: templates/admin/content_rules.php:87
+#: templates/admin/content_rules.php:94
 msgid "啟用智慧重導"
 msgstr ""
 
-#: templates/admin/content_rules.php:92
+#: templates/admin/content_rules.php:99
 msgid "關閉後，被隱藏的單頁仍可直接造訪（僅從列表排除）。"
 msgstr ""
 
-#: templates/admin/content_rules.php:96
-msgid "套用的內容類型"
+#: templates/admin/content_rules.php:103
+msgid "重導處理方式"
 msgstr ""
 
-#: templates/admin/content_rules.php:111
-msgid "文章被隱藏時，重導至"
+#: templates/admin/content_rules.php:105
+msgid "302 暫時重導"
 msgstr ""
 
-#: templates/admin/content_rules.php:113
-msgid "建議：該語言的文章列表頁。"
+#: templates/admin/content_rules.php:106
+msgid "301 永久重導（建議：該語言永久無此內容）"
+msgstr ""
+
+#: templates/admin/content_rules.php:107
+msgid "404 找不到頁面（不重導，讓搜尋引擎移除索引）"
+msgstr ""
+
+#: templates/admin/content_rules.php:112
+msgid "優先跳轉到上層"
 msgstr ""
 
 #: templates/admin/content_rules.php:117
+msgid "開啟後，會先沿階層往上找最近一個「該語言可見」的上層（頁面／階層式內容）並跳過去；找不到才用下方各類型的 fallback。"
+msgstr ""
+
+#: templates/admin/content_rules.php:121
+msgid "套用的內容類型"
+msgstr ""
+
+#: templates/admin/content_rules.php:136
+msgid "文章被隱藏時，重導至"
+msgstr ""
+
+#: templates/admin/content_rules.php:138
+msgid "建議：該語言的文章列表頁。"
+msgstr ""
+
+#: templates/admin/content_rules.php:142
 msgid "頁面被隱藏時，重導至"
 msgstr ""
 
-#: templates/admin/content_rules.php:119
+#: templates/admin/content_rules.php:144
 msgid "建議：該語言的首頁。"
 msgstr ""
 
-#: templates/admin/content_rules.php:123
+#: templates/admin/content_rules.php:148
 msgid "其他內容類型被隱藏時，重導至"
+msgstr ""
+
+#: templates/admin/content_rules.php:153
+msgid "全域預設跳轉頁"
+msgstr ""
+
+#: templates/admin/content_rules.php:155
+msgid "上層找不到、且該類型設為「未指定」時，最後跳到這裡。"
 msgstr ""
 
 #: templates/admin/import_export.php:50

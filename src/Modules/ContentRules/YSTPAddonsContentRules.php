@@ -273,15 +273,82 @@ class YSTPAddonsContentRules implements YSTPAddonsModuleInterface {
             return;
         }
 
-        $target = $this->fallback_url( $post->post_type, $lang );
+        $status = (string) YSTPAddonsSettingsRepo::get( 'content_redirect_status', '302' );
+
+        // 404 模式：不重導，直接回 404（搜尋引擎據此移除該語言索引）
+        if ( '404' === $status ) {
+            $this->trigger_404();
+            return;
+        }
+
+        $code   = ( '301' === $status ) ? 301 : 302;
+        $target = '';
+
+        // ① 上層偵測：跳到最近一個「該語言可見」的上層（頁面／階層式 CPT）
+        if ( (int) YSTPAddonsSettingsRepo::get( 'content_fb_parent', 1 ) ) {
+            $ancestor = $this->nearest_visible_ancestor( $post, $lang );
+            if ( $ancestor ) {
+                $url = get_permalink( $ancestor );
+                if ( $url ) {
+                    $target = YSTPAddonsTP::url_for_language( $lang, $url );
+                }
+            }
+        }
+
+        // ② 無可用上層 → 文章類型 fallback（未指定則 fallback_url 內轉用全域預設）
+        if ( '' === $target ) {
+            $target = $this->fallback_url( $post->post_type, $lang );
+        }
+
         if ( $target ) {
-            wp_safe_redirect( $target, 302 );
+            wp_safe_redirect( $target, $code );
             exit;
         }
     }
 
     /**
+     * 沿 post_parent 往上找最近一個「已發佈且在該語言可見」的上層
+     *
+     * @return int 上層 post ID；0 表示沒有可用上層
+     */
+    private function nearest_visible_ancestor( \WP_Post $post, string $lang ): int {
+        $pid   = (int) $post->post_parent;
+        $guard = 0;
+        while ( $pid && $guard < 20 ) {
+            $parent = get_post( $pid );
+            if ( ! $parent instanceof \WP_Post ) {
+                break;
+            }
+            if ( 'publish' === $parent->post_status && ! self::is_hidden( $pid, $lang ) ) {
+                return $pid;
+            }
+            $pid = (int) $parent->post_parent;
+            $guard++;
+        }
+        return 0;
+    }
+
+    /**
+     * 直接回 404（不重導）
+     */
+    private function trigger_404(): void {
+        global $wp_query;
+        if ( $wp_query instanceof \WP_Query ) {
+            $wp_query->set_404();
+        }
+        status_header( 404 );
+        nocache_headers();
+        $template = get_404_template();
+        if ( $template ) {
+            include $template;
+        }
+        exit;
+    }
+
+    /**
      * 計算某 post type 在某語言的 fallback 目標 URL（當前語言版本）
+     *
+     * 每個 post type 可設定目標，或設為「未指定」改用全域預設跳轉頁。
      */
     private function fallback_url( string $post_type, string $lang ): string {
         if ( 'post' === $post_type ) {
@@ -290,6 +357,11 @@ class YSTPAddonsContentRules implements YSTPAddonsModuleInterface {
             $opt = (string) YSTPAddonsSettingsRepo::get( 'content_fb_page', 'home' );
         } else {
             $opt = (string) YSTPAddonsSettingsRepo::get( 'content_fb_default', 'home' );
+        }
+
+        // 未指定 → 全域預設跳轉頁
+        if ( '' === $opt || 'inherit' === $opt ) {
+            $opt = (string) YSTPAddonsSettingsRepo::get( 'content_fb_global', 'home' );
         }
 
         $base = $this->resolve_target_base( $opt, $post_type );

@@ -151,13 +151,20 @@ class YSTPAddonsSeo implements YSTPAddonsModuleInterface {
 
     /**
      * 在單一 <url> 區塊內插入各語言 xhtml:link alternate
+     *
+     * 被「內容語言規則」排除該語言的內容，不輸出該語言的 alternate
+     * （避免 sitemap 指向會被重導／404 的網址）。
      */
     private function inject_alternates( string $output, string $loc ): string {
         if ( '' === $output || '' === $loc ) {
             return $output;
         }
-        $links = '';
+        $post_id = url_to_postid( $loc );
+        $links   = '';
         foreach ( YSTPAddonsTP::published_language_codes() as $code ) {
+            if ( $post_id && self::is_hidden_in_language( $post_id, $code ) ) {
+                continue;
+            }
             $hreflang = str_replace( '_', '-', $code );
             $href     = YSTPAddonsTP::url_for_language( $code, $loc );
             $links   .= "\t\t<xhtml:link rel=\"alternate\" hreflang=\"" . esc_attr( $hreflang ) . '" href="' . esc_url( $href ) . "\" />\n";
@@ -167,5 +174,15 @@ class YSTPAddonsSeo implements YSTPAddonsModuleInterface {
         }
         // 在 </url> 前插入
         return str_replace( '</url>', $links . "\t</url>", $output );
+    }
+
+    /**
+     * 某內容在某語言是否被「內容語言規則」隱藏（模組未啟用則永不隱藏）
+     */
+    private static function is_hidden_in_language( int $post_id, string $lang ): bool {
+        if ( ! \YangSheep\TPAddons\Support\YSTPAddonsModules::is_enabled( 'content_rules' ) ) {
+            return false;
+        }
+        return \YangSheep\TPAddons\Modules\ContentRules\YSTPAddonsContentRules::is_hidden( $post_id, $lang );
     }
 }
