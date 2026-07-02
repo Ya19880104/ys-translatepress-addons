@@ -18,8 +18,13 @@ defined( 'ABSPATH' ) || exit;
 
 class YSTPAddonsTPCleanup {
 
-    /** TranslatePress 升級／推廣區塊的容器選擇器（編輯器 + 後台 + 授權頁） */
-    private const UPSELL_SELECTORS = '.trp-upsell-section,.trp-upsell-section-container,.trp-upsell-string-translation,.trp-upsell-button,.trp-upgrade-notice,.trp-upgrade-notice-button,.trp-upgrade-notice-table,.trp-license-page-upsell-container,.trp-ai-upsell-arrow,.trp-ai-upsell-body';
+    /**
+     * TranslatePress 升級／推廣區塊的選擇器（編輯器 + 後台 + 授權頁）
+     *
+     * 編輯器「額外翻譯功能」框是以 id 呈現（#trp-upsell-section-container），
+     * 非 class；其餘後台升級提示則為 class。
+     */
+    private const UPSELL_SELECTORS = '#trp-upsell-section-container,#trp-upsell-section,#trp-upsell-section-title,.trp-upsell-string-translation,.trp-upsell-button,.trp-upgrade-notice,.trp-upgrade-notice-button,.trp-upgrade-notice-table,.trp-license-page-upsell-container,.trp-ai-upsell-arrow,.trp-ai-upsell-body';
 
     public function boot(): void {
         if ( ! (int) YSTPAddonsSettingsRepo::get( 'hide_tp_upsell', 0 ) ) {

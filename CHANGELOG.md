@@ -2,6 +2,11 @@
 
 本檔案記錄所有重要變更，格式依循 [Keep a Changelog](https://keepachangelog.com/)。
 
+## [0.10.1] - 2026-06-25 — 修正：隱藏 TranslatePress 升級提示未生效於編輯器
+
+### 修正
+- 「隱藏 TranslatePress 升級／推廣提示」開啟時，翻譯編輯器的「額外翻譯功能」升級框未被隱藏——原選擇器誤用 class，實際該框以 id 呈現（`#trp-upsell-section-container`）。已改用正確的 id 選擇器並實測隱藏成功。
+
 ## [0.10.0] - 2026-06-25 — 階梯式智慧重導 + Sitemap 排除被隱藏語言
 
 ### 新增
