@@ -186,6 +186,7 @@ class YSTPAddonsContentRules implements YSTPAddonsModuleInterface {
         // phpcs:ignore WordPress.Security.NonceVerification.Recommended
         $cur = isset( $_GET['ys_tp_lf'] ) ? sanitize_text_field( wp_unslash( $_GET['ys_tp_lf'] ) ) : '';
 
+        // 標籤含「顯示於／隱藏於」前綴，收合時仍可辨識（避免兩組同名語言混淆）
         echo '<select name="ys_tp_lf" id="ys-tp-lf">';
         echo '<option value="">' . esc_html__( '全部語言', 'ys-translatepress-addons' ) . '</option>';
         echo '<optgroup label="' . esc_attr__( '顯示於', 'ys-translatepress-addons' ) . '">';
@@ -194,7 +195,7 @@ class YSTPAddonsContentRules implements YSTPAddonsModuleInterface {
                 '<option value="show_%s" %s>%s</option>',
                 esc_attr( $code ),
                 selected( $cur, 'show_' . $code, false ),
-                esc_html( $name )
+                esc_html__( '顯示於', 'ys-translatepress-addons' ) . ' ' . esc_html( $name )
             );
         }
         echo '</optgroup><optgroup label="' . esc_attr__( '隱藏於', 'ys-translatepress-addons' ) . '">';
@@ -203,7 +204,7 @@ class YSTPAddonsContentRules implements YSTPAddonsModuleInterface {
                 '<option value="hide_%s" %s>%s</option>',
                 esc_attr( $code ),
                 selected( $cur, 'hide_' . $code, false ),
-                esc_html( $name )
+                esc_html__( '隱藏於', 'ys-translatepress-addons' ) . ' ' . esc_html( $name )
             );
         }
         echo '</optgroup></select>';
