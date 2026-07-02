@@ -164,6 +164,89 @@ class YSTPAddonsContentRules implements YSTPAddonsModuleInterface {
             add_action( "manage_{$pt}_posts_custom_column", [ $this, 'render_lang_column' ], 10, 2 );
         }
         add_action( 'admin_head', [ $this, 'lang_column_css' ] );
+
+        // 列表上方語言篩選下拉 + 套用
+        add_action( 'restrict_manage_posts', [ $this, 'render_lang_filter' ] );
+        add_action( 'pre_get_posts', [ $this, 'filter_list_by_lang' ] );
+    }
+
+    /**
+     * 列表上方輸出「語言」篩選下拉（顯示於／隱藏於 各語言）
+     *
+     * @param string $post_type
+     */
+    public function render_lang_filter( $post_type ): void {
+        if ( ! in_array( $post_type, $this->post_types(), true ) ) {
+            return;
+        }
+        $langs = YSTPAddonsTP::languages();
+        if ( count( $langs ) < 2 ) {
+            return;
+        }
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+        $cur = isset( $_GET['ys_tp_lf'] ) ? sanitize_text_field( wp_unslash( $_GET['ys_tp_lf'] ) ) : '';
+
+        echo '<select name="ys_tp_lf" id="ys-tp-lf">';
+        echo '<option value="">' . esc_html__( '全部語言', 'ys-translatepress-addons' ) . '</option>';
+        echo '<optgroup label="' . esc_attr__( '顯示於', 'ys-translatepress-addons' ) . '">';
+        foreach ( $langs as $code => $name ) {
+            printf(
+                '<option value="show_%s" %s>%s</option>',
+                esc_attr( $code ),
+                selected( $cur, 'show_' . $code, false ),
+                esc_html( $name )
+            );
+        }
+        echo '</optgroup><optgroup label="' . esc_attr__( '隱藏於', 'ys-translatepress-addons' ) . '">';
+        foreach ( $langs as $code => $name ) {
+            printf(
+                '<option value="hide_%s" %s>%s</option>',
+                esc_attr( $code ),
+                selected( $cur, 'hide_' . $code, false ),
+                esc_html( $name )
+            );
+        }
+        echo '</optgroup></select>';
+    }
+
+    /**
+     * 依語言篩選列表主查詢
+     */
+    public function filter_list_by_lang( $query ): void {
+        if ( ! is_admin() || ! $query instanceof \WP_Query || ! $query->is_main_query() ) {
+            return;
+        }
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+        $val = isset( $_GET['ys_tp_lf'] ) ? sanitize_text_field( wp_unslash( $_GET['ys_tp_lf'] ) ) : '';
+        if ( ! preg_match( '/^(show|hide)_(.+)$/', $val, $m ) ) {
+            return;
+        }
+        $pt = $query->get( 'post_type' );
+        if ( is_array( $pt ) ) {
+            return;
+        }
+        if ( '' === $pt ) {
+            $pt = 'post';
+        }
+        if ( ! in_array( $pt, $this->post_types(), true ) ) {
+            return;
+        }
+
+        $mode = $m[1];
+        $lang = $m[2];
+        if ( ! in_array( $lang, YSTPAddonsTP::published_language_codes(), true ) ) {
+            return;
+        }
+
+        $hidden = $this->hidden_ids( $lang );
+        if ( 'hide' === $mode ) {
+            // 只顯示「在該語言被隱藏」的內容；無則強制無結果
+            $query->set( 'post__in', ! empty( $hidden ) ? $hidden : [ 0 ] );
+        } elseif ( ! empty( $hidden ) ) {
+            // 顯示「在該語言可見」的內容＝排除被隱藏者
+            $existing = (array) $query->get( 'post__not_in' );
+            $query->set( 'post__not_in', array_values( array_unique( array_merge( $existing, $hidden ) ) ) );
+        }
     }
 
     /**
