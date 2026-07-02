@@ -29,6 +29,8 @@ class YSTPAddonsContentRules implements YSTPAddonsModuleInterface {
         if ( is_admin() ) {
             add_action( 'add_meta_boxes', [ $this, 'register_meta_box' ] );
             add_action( 'save_post', [ $this, 'save_meta' ], 10, 2 );
+            // 列表語言可用性欄位（小國旗 + 綠勾）
+            add_action( 'admin_init', [ $this, 'register_lang_columns' ] );
         } else {
             add_action( 'pre_get_posts', [ $this, 'exclude_from_lists' ] );
             add_action( 'template_redirect', [ $this, 'maybe_redirect' ] );
@@ -146,6 +148,90 @@ class YSTPAddonsContentRules implements YSTPAddonsModuleInterface {
         }
 
         $this->flush_cache();
+    }
+
+    /* ───────────── 列表：語言可用性欄位 ───────────── */
+
+    /**
+     * 於各套用內容類型的列表加入「語言」欄（admin_init 時 CPT 已註冊完畢）
+     */
+    public function register_lang_columns(): void {
+        if ( ! (int) YSTPAddonsSettingsRepo::get( 'content_lang_column', 1 ) ) {
+            return;
+        }
+        foreach ( $this->post_types() as $pt ) {
+            add_filter( "manage_edit-{$pt}_columns", [ $this, 'add_lang_column' ] );
+            add_action( "manage_{$pt}_posts_custom_column", [ $this, 'render_lang_column' ], 10, 2 );
+        }
+        add_action( 'admin_head', [ $this, 'lang_column_css' ] );
+    }
+
+    /**
+     * 在「日期」欄前插入「語言」欄
+     *
+     * @param array<string, string> $columns
+     * @return array<string, string>
+     */
+    public function add_lang_column( array $columns ): array {
+        $new = [];
+        foreach ( $columns as $key => $label ) {
+            if ( 'date' === $key ) {
+                $new['ys_tp_langs'] = __( '語言', 'ys-translatepress-addons' );
+            }
+            $new[ $key ] = $label;
+        }
+        if ( ! isset( $new['ys_tp_langs'] ) ) {
+            $new['ys_tp_langs'] = __( '語言', 'ys-translatepress-addons' );
+        }
+        return $new;
+    }
+
+    /**
+     * 渲染語言欄：各語言小國旗，可見語言帶綠勾、被隱藏語言灰階
+     */
+    public function render_lang_column( $column, $post_id ): void {
+        if ( 'ys_tp_langs' !== $column ) {
+            return;
+        }
+        $langs = YSTPAddonsTP::languages();
+        if ( empty( $langs ) ) {
+            echo '—';
+            return;
+        }
+        echo '<span class="ys-tp-langcol">';
+        foreach ( $langs as $code => $name ) {
+            $hidden = self::is_hidden( (int) $post_id, $code );
+            $title  = $name . ( $hidden
+                ? '（' . __( '不顯示', 'ys-translatepress-addons' ) . '）'
+                : '（' . __( '顯示', 'ys-translatepress-addons' ) . '）' );
+            printf(
+                '<span class="ys-tp-lf %s" title="%s"><img src="%s" alt="" width="18" height="12" loading="lazy" />%s</span>',
+                $hidden ? 'is-off' : 'is-on',
+                esc_attr( $title ),
+                esc_url( YSTPAddonsTP::flag_url( $code ) ),
+                $hidden ? '' : '<i class="ys-tp-lf-ck" aria-hidden="true"></i>' // phpcs:ignore
+            );
+        }
+        echo '</span>';
+    }
+
+    /**
+     * 語言欄樣式（僅在套用類型的列表頁輸出）
+     */
+    public function lang_column_css(): void {
+        $screen = get_current_screen();
+        if ( ! $screen || 'edit' !== $screen->base || ! in_array( $screen->post_type, $this->post_types(), true ) ) {
+            return;
+        }
+        echo '<style>'
+            . '.column-ys_tp_langs{width:118px;}'
+            . '.ys-tp-langcol{display:inline-flex;flex-wrap:wrap;gap:7px;align-items:center;}'
+            . '.ys-tp-lf{position:relative;display:inline-flex;line-height:0;}'
+            . '.ys-tp-lf img{border-radius:2px;box-shadow:0 0 0 1px rgba(0,0,0,.12);}'
+            . '.ys-tp-lf.is-off img{filter:grayscale(1);opacity:.35;}'
+            . '.ys-tp-lf-ck{position:absolute;right:-5px;bottom:-5px;width:12px;height:12px;background:#46b450;border-radius:50%;border:1.5px solid #fff;box-shadow:0 1px 2px rgba(0,0,0,.2);}'
+            . '.ys-tp-lf-ck::after{content:"";position:absolute;left:3.5px;top:1.5px;width:3px;height:5px;border:solid #fff;border-width:0 1.5px 1.5px 0;transform:rotate(45deg);}'
+            . '</style>';
     }
 
     /* ───────────── 隱藏判斷 ───────────── */

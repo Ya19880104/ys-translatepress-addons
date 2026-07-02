@@ -13,6 +13,7 @@ defined( 'ABSPATH' ) || exit;
 
 use YangSheep\TPAddons\Database\YSTPAddonsSettingsRepo;
 
+$lang_col    = (int) YSTPAddonsSettingsRepo::get( 'content_lang_column', 1 );
 $redirect_on = (int) YSTPAddonsSettingsRepo::get( 'content_redirect_enabled', 1 );
 $status      = (string) YSTPAddonsSettingsRepo::get( 'content_redirect_status', '302' );
 $parent_on   = (int) YSTPAddonsSettingsRepo::get( 'content_fb_parent', 1 );
@@ -90,6 +91,15 @@ $render_fb = static function ( string $setting, string $current, bool $with_inhe
     <div class="ystp-panel">
         <div class="ystp-panel-head"><span class="dashicons dashicons-admin-settings"></span> 規則設定</div>
         <div class="ystp-panel-body ystp-form" data-form="content">
+            <div class="ystp-field">
+                <label><?php esc_html_e( '列表顯示語言欄', 'ys-translatepress-addons' ); ?></label>
+                <label class="ystp-toggle" style="margin-top:4px;">
+                    <input type="checkbox" data-setting="content_lang_column" <?php checked( $lang_col, 1 ); ?> />
+                    <span class="ystp-slider"></span>
+                </label>
+                <p class="ystp-field-desc"><?php esc_html_e( '在文章／頁面／自訂內容的後台列表加入「語言」欄，以小國旗＋綠勾顯示各語言是否顯示（被排除語言呈灰階）。', 'ys-translatepress-addons' ); ?></p>
+            </div>
+
             <div class="ystp-field">
                 <label><?php esc_html_e( '啟用智慧重導', 'ys-translatepress-addons' ); ?></label>
                 <label class="ystp-toggle" style="margin-top:4px;">
